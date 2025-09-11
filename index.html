@@ -381,11 +381,10 @@
       return (sortDir==='asc'?(A-B):(B-A));
     }
 
-    // ===== Header: first row (sortables) + 7 fixed meta rows inside THEAD
+    // header with 7 meta rows
     function header(cols){
       const make = (label,key,align='center') =>
         `<th class="th-sort ${sortKey===key?sortDir:''} ${align==='left'?'left':'center'}" data-key="${key}">${label}<span class="arrow">▾</span></th>`;
-
       let html = '<tr>' + make('Model','model','left') + make('🥇 Gold','gold') + make('🥈 Silver','silver') + make('🥉 Bronze','bronze');
       for (const c of cols){ html += make(`${c.n} ${c.y}`, `${c.n}-${c.y}`); }
       html += '</tr>';
@@ -399,7 +398,6 @@
         {key:'silver',name:'Silver Medal', cls:'med-silver', type:'thr'},
         {key:'bronze',name:'Bronze Medal', cls:'med-bronze', type:'thr'}
       ];
-
       for (const r of rows){
         html += `<tr class="metahead">` +
                 `<th class="left">${r.name}</th>` +
@@ -411,11 +409,29 @@
         }
         html += `</tr>`;
       }
-
       document.getElementById('thead').innerHTML = html;
     }
 
-    // ===== Body rows (models only)
+    // stack sticky header rows (key fix!)
+    function stackStickyHeader(){
+      const thead = document.getElementById('thead');
+      const rows = Array.from(thead.querySelectorAll('tr'));
+      let top = 0;
+      for(const r of rows){
+        const h = r.getBoundingClientRect().height || r.offsetHeight || 32;
+        for(const th of r.children){
+          th.style.position = 'sticky';
+          th.style.top = top + 'px';
+          th.style.zIndex = 5; // above body cells
+        }
+        // ensure the first sticky-left header cell is above others
+        const first = r.children[0];
+        if(first){ first.style.zIndex = 6; }
+        top += h;
+      }
+    }
+
+    // models
     function modelRows(cols){
       const q = document.getElementById('modelSearch').value.trim().toLowerCase();
       const data = [];
@@ -451,7 +467,9 @@
     function render(){
       const cols = humanCols();
       header(cols);
-      document.getElementById('tbody').innerHTML = modelRows(cols); // 仅渲染模型行
+      document.getElementById('tbody').innerHTML = modelRows(cols);
+      // 关键：渲染完 header 后叠加 sticky 偏移
+      stackStickyHeader();
     }
 
     function attachFilters(){
