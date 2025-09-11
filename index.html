@@ -6,58 +6,84 @@
   <title>PhyArena</title>
   <style>
     :root{
-      --bg:#fafafa; --card:#ffffff; --ink:#0f172a; --muted:#475569; --line:#e5e7eb;
-      --gold:#f8d34f; --gold-weak:#fff6cc; --silver:#cfd8dc; --silver-weak:#eef5f7; --bronze:#e0a36c; --bronze-weak:#fbf0e6;
-      --chip:#f3f4f6; --chip-border:#e5e7eb; --accent:#0ea5e9;
+      --bg:#f6f8fb; --card:#ffffff; --ink:#0f172a; --muted:#5b6476; --line:#e5e7eb;
+      --gold:#ffd23f; --gold-weak:#ffe26f; --silver:#bfc9d2; --silver-weak:#d9e3ea; --bronze:#e28e54; --bronze-weak:#f6caa7;
+      --chip:#f3f4f6; --chip-border:#e5e7eb; --accent:#0ea5e9; --shadow:0 8px 30px rgba(2,6,23,.08);
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+    body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
     a{color:var(--accent);text-decoration:none}
     .wrap{max-width:1280px;margin:0 auto;padding:24px}
 
-    /* Header */
-    header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-bottom:18px}
-    header .title{text-align:center}
-    h1{margin:0;font-size:42px;letter-spacing:0.5px}
-    .subtitle{margin-top:6px;color:var(--muted)}
-    .logo-box{display:flex;align-items:center;gap:10px}
-    .logo-box img{height:96px;object-fit:contain;filter: drop-shadow(0 1px 0 rgba(0,0,0,.03))}
+    /* Fancy background accents */
+    body::before{content:"";position:fixed;inset:-20% -10% auto -10%;height:60vh;background:radial-gradient(1200px 600px at 50% -10%, rgba(14,165,233,.12), transparent 60%), radial-gradient(800px 400px at 90% 10%, rgba(99,102,241,.10), transparent 60%);pointer-events:none;z-index:-1}
+
+    /* Sticky topbar full width */
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+    .topbar-inner{width:100%;display:flex;align-items:center;gap:14px;padding:14px 24px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{height:34px}
+    .brand .word{font-weight:800;letter-spacing:.3px;font-size:20px;color:var(--ink)}
+    .topnav{margin-left:auto;display:flex;gap:22px}
+    .topnav a{font-size:15px;color:var(--muted)}
+
+    /* Hero */
+    header.hero{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin:12px 0 10px}
+    header.hero .logo-pad{height:96px}
+    header.hero h1{margin:0;font-size:58px;letter-spacing:.5px;text-align:center}
+    header.hero .subtitle{margin:10px 0 6px;color:var(--muted);font-size:19px;text-align:center}
+
+    /* Features */
+    .features{max-width:900px;margin:22px auto 18px;display:flex;flex-direction:column;gap:14px;align-items:center}
+    .feature-row{width:100%;display:flex;gap:12px;align-items:flex-start;background:linear-gradient(180deg,rgba(255,255,255,.9),#fff);border:1px solid var(--line);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow)}
+    .feature-icon{font-size:18px;line-height:26px}
+    .feature-text{font-size:16px}
+
+    .cta-tiles{display:flex;justify-content:center;gap:18px;margin:18px 0 24px}
+    .tile{flex:0 0 280px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 16px;text-align:center;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s ease}
+    .tile:hover{transform:translateY(-2px)}
+    .tile h3{margin:0 0 6px;font-size:24px}
+    .tile .sub{color:var(--muted)}
 
     /* Tabs */
-    .tabs{display:flex;gap:8px;margin:12px 0 16px}
-    .tab{padding:8px 14px;border:1px solid var(--line);border-bottom:none;background:var(--card);border-radius:10px 10px 0 0;cursor:pointer}
-    .tab.active{background:#fff;font-weight:600;box-shadow:0 1px 0 #fff}
+    .tabs{display:flex;gap:8px;margin:6px 0 12px}
+    .tab{padding:10px 16px;border:1px solid var(--line);border-bottom:none;background:var(--card);border-radius:12px 12px 0 0;cursor:pointer;font-size:15px}
+    .tab.active{background:#fff;font-weight:700;box-shadow:0 1px 0 #fff}
 
     /* Card */
-    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
 
     /* Controls */
-    .controls{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;align-items:center}
+    .controls{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;align-items:center}
     .controls label{font-size:12px;color:var(--muted)}
-    .controls select,.controls input[type="text"]{padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;min-width:150px}
+    .controls select,.controls input[type="text"]{padding:7px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;min-width:150px}
     .pillgroup{display:flex;gap:6px;flex-wrap:wrap}
-    .pill{border:1px solid var(--line);padding:4px 10px;border-radius:999px;background:#fff;cursor:pointer;font-size:12px}
+    .pill{border:1px solid var(--line);padding:6px 12px;border-radius:999px;background:#fff;cursor:pointer;font-size:12px}
     .pill.active{background:#eef6ff;border-color:#c5e0ff;color:#074fa5}
+
+    /* Legend */
+    .legend{display:flex;gap:12px;align-items:center;margin:6px 0 8px}
+    .legend .chip{font-size:12px}
 
     /* Table */
     .table-wrap{max-height:68vh;overflow:auto;border:1px solid var(--line);border-radius:12px}
     table{border-collapse:separate;border-spacing:0;width:100%;background:#fff}
-    th,td{padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-    thead th{position:sticky;top:0;background:#fff;z-index:3;font-weight:600;border-bottom:1px solid var(--line)}
+    th,td{padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+    thead th{position:sticky;top:0;background:#fff;z-index:3;font-weight:700;border-bottom:1px solid var(--line)}
     tbody tr:hover td{background:#fcfcff}
     th:first-child, td:first-child{position:sticky;left:0;background:#fff;z-index:2}
     thead th:first-child{z-index:4}
 
     /* model chips */
     .chip{display:inline-block;border:1px solid var(--chip-border);border-radius:10px;padding:2px 8px;background:var(--chip)}
-    .cat-closed{background:#e0f2fe;border-color:#38bdf8;color:#075985}
-    .cat-open-mlm{background:#ecfdf5;border-color:#34d399;color:#065f46}
-    .cat-open-llm{background:#f3e8ff;border-color:#c084fc;color:#6b21a8}
+    .cat-closed{background:#cce9ff;border-color:#38bdf8;color:#064e7a}
+    .cat-open-mlm{background:#c9f9df;border-color:#34d399;color:#065f46}
+    .cat-open-llm{background:#e9d5ff;border-color:#c084fc;color:#6b21a8}
 
-    /* medal backgrounds */
-    .bg-gold{background:linear-gradient(180deg,var(--gold-weak),#fff)}
-    .bg-silver{background:linear-gradient(180deg,var(--silver-weak),#fff)}
-    .bg-bronze{background:linear-gradient(180deg,var(--bronze-weak),#fff)}
+    /* Medal cells – stronger */
+    .med-gold{background:linear-gradient(180deg,var(--gold-weak),#fff)}
+    .med-silver{background:linear-gradient(180deg,var(--silver-weak),#fff)}
+    .med-bronze{background:linear-gradient(180deg,var(--bronze-weak),#fff)}
 
     .th-sort{cursor:pointer;user-select:none}
     .th-sort .arrow{opacity:.35;margin-left:6px}
@@ -67,20 +93,53 @@
     .muted{color:var(--muted)}
     .right{text-align:right}
     .center{text-align:center}
+    .left{text-align:left}
+
+    /* Section title */
+    .section-title{text-align:center;font-size:34px;margin:6px 0 10px}
   </style>
 </head>
 <body>
+  <!-- Sticky header bar (full width) -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#">
+        <img src="assets/logo.png" alt="logo"/>
+        <span class="word">PhyArena</span>
+      </a>
+      <nav class="topnav">
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
+  </div>
+
   <div class="wrap">
-    <header>
-      <div class="logo-box"><img src="logo.png" alt="logo"/></div>
-      <div class="title">
+    <!-- HERO -->
+    <header class="hero">
+      <div class="logo-pad"></div>
+      <div>
         <h1>PhyArena</h1>
-        <div class="subtitle">Evaluating LLMs and MLLMs on physics Olympiads and problem sets</div>
+        <div class="subtitle">Benchmarking the physics reasoning of LLMs & MLLMs — from Olympiads to problem sets</div>
       </div>
-      <div class="logo-box" aria-hidden="true"></div>
+      <div class="logo-pad" aria-hidden="true"></div>
     </header>
 
-    <div class="tabs">
+    <!-- FEATURES (centered, punchier) -->
+    <div class="features">
+      <div class="feature-row"><div class="feature-icon">⚛️</div><div class="feature-text"><b>First Physics‑Olympiad leaderboard</b> — 13 physics Olympiads from 2024–2025 with <b>official medal cutoffs</b>.</div></div>
+      <div class="feature-row"><div class="feature-icon">🤝</div><div class="feature-text"><b>Direct human‑model comparison</b> — HiPhO benchmarks (M)LLM exam scores against <b>human contestants</b>.</div></div>
+      <div class="feature-row"><div class="feature-icon">📚</div><div class="feature-text"><b>Rich difficulty spectrum</b> — PHYSICS spans <b>high school, Olympiad, undergraduate, and graduate levels</b>.</div></div>
+    </div>
+
+    <!-- CTA TILES -->
+    <div class="cta-tiles">
+      <div class="tile" id="btnHiPhO"><h3>HiPhO</h3><div class="sub">Physics Olympiad</div></div>
+      <div class="tile" id="btnPHYSICS"><h3>PHYSICS</h3><div class="sub">Mixed Difficulty</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div id="leaderboard" class="tabs">
       <div class="tab active" id="tab-hipho">HiPhO</div>
       <div class="tab" id="tab-physics">PHYSICS</div>
     </div>
@@ -101,10 +160,21 @@
           <div class="pillgroup" id="compPills"></div>
         </div>
         <div>
+          <label>Category</label><br>
+          <div class="pillgroup" id="catPills"></div>
+        </div>
+        <div>
           <label for="modelSearch">Model</label><br>
           <input id="modelSearch" type="text" placeholder="Filter model…" />
         </div>
-        <div class="muted">Tip: click any column header to sort</div>
+        <div class="muted">Metric: <b>exam score</b>. Tip: click any column header to sort.</div>
+      </div>
+
+      <div class="legend">
+        <span>Legend:</span>
+        <span class="chip cat-closed">Closed‑source MLLM</span>
+        <span class="chip cat-open-mlm">Open‑source MLLM</span>
+        <span class="chip cat-open-llm">Open‑source LLM</span>
       </div>
 
       <div class="table-wrap" id="tableWrap">
@@ -113,17 +183,60 @@
           <tbody id="tbody"></tbody>
         </table>
       </div>
-      <div class="muted" style="margin-top:8px">Cells are colored by medal thresholds of each contest. Medal counts (🥇/🥈/🥉) update with current filters.
-      Default order: Gold ↓, then Silver ↓, Bronze ↓; tie‑break by IPhO 2025 score ↓.</div>
+      <div class="muted" style="margin-top:8px">Cells are colored by medal thresholds of each contest. Medal counts (🥇/🥈/🥉) update with current filters. Default order: Gold ↓, then Silver ↓, Bronze ↓; tie‑break by IPhO 2025 score ↓.</div>
     </section>
 
     <!-- PHYSICS Panel -->
     <section id="panel-physics" class="card" style="display:none">
-      <div class="muted">PHYSICS benchmark coming soon.</div>
+      <h3>PHYSICS benchmark</h3>
+      <p class="muted">Coming soon. Provide <code>data/physics.json</code> with the same structure to render automatically.</p>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="card" style="margin-top:18px">
+      <h2 class="section-title">What is PhyArena?</h2>
+      <p style="max-width:900px;margin:0 auto 8px;text-align:left">
+        <b>PhyArena</b> is an open leaderboard and evaluation suite to measure <em>physics reasoning</em> in LLMs and MLLMs. 
+        It features recent Physics Olympiad exams and curated problem sets, offering a comprehensive evaluation.
+      </p>
+      <p style="max-width:900px;margin:0 auto 12px;text-align:left">
+        We provide two complementary benchmarks. Click the links below to explore datasets, code, and papers.
+      </p>
+
+      <h3 style="text-align:center">HiPhO — Physics Olympiad (multimodal)</h3>
+      <p style="max-width:900px;margin:0 auto;text-align:left">HiPhO aggregates 13 Olympiad exams from 2024–2025 (IPhO, APhO, EuPhO, NBPhO, PanPhO, PanMechanics, F=MA). It spans both international and regional competitions, and covering mixed modalities that encompass problems spanning text-only to diagram-based.</p>
+      <div style="display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:10px 0 18px">
+        <a class="tile" id="linkHiphoDs" href="#" target="_blank" style="flex:0 0 200px"><h3 style="font-size:18px">Hugging Face</h3><div class="sub">dataset</div></a>
+        <a class="tile" id="linkHiphoCode" href="#" target="_blank" style="flex:0 0 200px"><h3 style="font-size:18px">GitHub</h3><div class="sub">project</div></a>
+        <a class="tile" id="linkHiphoPaper" href="#" target="_blank" style="flex:0 0 200px"><h3 style="font-size:18px">Paper</h3><div class="sub">pdf</div></a>
+      </div>
+
+      <h3 style="text-align:center">PHYSICS — Mixed difficulty (text‑only)</h3>
+      <p style="max-width:900px;margin:0 auto;text-align:left">PHYSICS spans high-school, Olympiad, undergraduate, and graduate levels, offering text-only problems that test scaling and generalization beyond Olympiad exams.</p>
+      <div style="display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:10px 0 0">
+        <a class="tile" id="linkPhysDs" href="#" target="_blank" style="flex:0 0 200px"><h3 style="font-size:18px">Hugging Face</h3><div class="sub">dataset</div></a>
+        <a class="tile" id="linkPhysCode" href="#" target="_blank" style="flex:0 0 200px"><h3 style="font-size:18px">GitHub</h3><div class="sub">project</div></a>
+        <a class="tile" id="linkPhysPaper" href="#" target="_blank" style="flex:0 0 200px"><h3 style="font-size:18px">Paper</h3><div class="sub">pdf</div></a>
+      </div>
     </section>
   </div>
 
   <script>
+    // ===== External links (replace with your real URLs)
+    const LINKS = {
+      hipho: { dataset:'https://huggingface.co/datasets/SciYu/HiPhO', code:'https://github.com/SciYu/HiPhO', paper:'https://arxiv.org/abs/2509.07894' },
+      physics: { dataset:'https://huggingface.co/datasets/desimfj/PHYSICS', code:'https://github.com/Zhengsh123/PHYSICS', paper:'https://arxiv.org/abs/2506.00022' }
+    };
+
+    function wireLinks(){
+      linkHiphoDs.href = LINKS.hipho.dataset;
+      linkHiphoCode.href = LINKS.hipho.code;
+      linkHiphoPaper.href = LINKS.hipho.paper;
+      linkPhysDs.href = LINKS.physics.dataset;
+      linkPhysCode.href = LINKS.physics.code;
+      linkPhysPaper.href = LINKS.physics.paper;
+    }
+
     // ===== Constants and state
     const CANONICAL_COLS = [
       {n:'IPhO',y:2025},{n:'IPhO',y:2024},
@@ -134,13 +247,16 @@
       {n:'PanMechanics',y:2025},{n:'PanMechanics',y:2024},
       {n:'F=MA',y:2025},{n:'F=MA',y:2024}
     ];
+    const CAT_LABELS = ['closed-source MLLM','open-source MLLM','open-source LLM'];
+
     let hiPho = [];            // raw olympiad entries
     let categories = {};       // model -> category
-    let ctx = {};              // key -> {thr, scores: Map(model->score)}
+    let ctx = {};              // key -> {thr, scores: Map(model->score), meta}
     let allModels = [];        // list of model names
 
     const yearSel = () => document.getElementById('yearSel').value;
     const selectedComps = new Set(); // filled later
+    const selectedCats = new Set(CAT_LABELS); // default all
 
     function colKey(n,y){return `${n}-${y}`}
 
@@ -157,7 +273,16 @@
         const key = colKey(o.name,o.year);
         const map = new Map();
         for(const m of o.models){ map.set(m.name, m.score); modelSet.add(m.name); }
-        ctx[key] = { thr:o.thresholds, scores:map };
+        ctx[key] = {
+          thr:o.thresholds,
+          scores:map,
+          meta:{
+            full_human: o.full_mark_human ?? o.full_mark?.human ?? null,
+            full_model: o.full_mark_model ?? o.full_mark?.model ?? null,
+            top1_human: o.top1_human ?? o.top1?.human ?? null,
+            top1_model: o.top1_model ?? o.top1?.model ?? null
+          }
+        };
       }
       allModels = Array.from(modelSet);
     }
@@ -205,6 +330,22 @@
       }
     }
 
+    function buildCatPills(){
+      const holder = document.getElementById('catPills');
+      holder.innerHTML = '';
+      for(const label of CAT_LABELS){
+        const el = document.createElement('button');
+        el.className = 'pill active';
+        el.textContent = label.replace('-','‑');
+        el.addEventListener('click', ()=>{
+          if(selectedCats.has(label)){ selectedCats.delete(label); el.classList.remove('active'); }
+          else { selectedCats.add(label); el.classList.add('active'); }
+          render();
+        });
+        holder.appendChild(el);
+      }
+    }
+
     // ===== Sorting
     let sortKey = null; // null => default medal sort
     let sortDir = 'desc';
@@ -221,7 +362,6 @@
     }
 
     function defaultComparator(a,b){
-      // medals desc, tie-break by IPhO-2025 score desc
       if(b.g!==a.g) return b.g-a.g;
       if(b.s!==a.s) return b.s-a.s;
       if(b.b!==a.b) return b.b-a.b;
@@ -242,26 +382,63 @@
 
     // ===== Render
     function header(cols){
-      const make = (label,key)=>`<th class="th-sort ${sortKey===key?sortDir:''}" data-key="${key}">${label}<span class="arrow">▾</span></th>`;
-      let html = '<tr>' + make('Model','model') + make('🥇 Gold','gold') + make('🥈 Silver','silver') + make('🥉 Bronze','bronze');
+      const make = (label,key,align='center')=>`<th class="th-sort ${sortKey===key?sortDir:''} ${align==='left'?'left':'center'}" data-key="${key}">${label}<span class="arrow">▾</span></th>`;
+      let html = '<tr>' + make('Model','model','left') + make('🥇 Gold','gold') + make('🥈 Silver','silver') + make('🥉 Bronze','bronze');
       for(const c of cols){ html += make(`${c.n} ${c.y}`, colKey(c.n,c.y)); }
       html += '</tr>';
       document.getElementById('thead').innerHTML = html;
     }
 
-    function cellClass(score, thr){
-      if(score==null) return '';
-      if(score >= thr.gold) return 'bg-gold';
-      if(score >= thr.silver) return 'bg-silver';
-      if(score >= thr.bronze) return 'bg-bronze';
-      return '';
+    function metaRows(cols){
+      // Build the 7 sticky rows above models
+      const labels = [
+        {key:'full_human', name:'Full Mark (Human)', cls:''},
+        {key:'full_model', name:'Full Mark (Model)', cls:''},
+        {key:'top1_human', name:'Top‑1 Score (Human)', cls:''},
+        {key:'top1_model', name:'Top‑1 Score (Model)', cls:''},
+        {key:'gold', name:'Gold Medal', cls:'med-gold'},
+        {key:'silver', name:'Silver Medal', cls:'med-silver'},
+        {key:'bronze', name:'Bronze Medal', cls:'med-bronze'}
+      ];
+      return labels.map((row,idx)=>{
+        let tr = `<tr class="meta-row" data-idx="${idx}"><td class="left">${row.name}</td>`;
+        // medal counts columns placeholders (3 medal cols occupy after model col)
+        tr += '<td class="center">—</td><td class="center">—</td><td class="center">—</td>';
+        for(const c of cols){
+          const box = ctx[colKey(c.n,c.y)];
+          let val = null;
+          if(row.key==='gold'||row.key==='silver'||row.key==='bronze'){
+            val = box?.thr?.[row.key] ?? null;
+          }else{
+            val = box?.meta?.[row.key] ?? null;
+          }
+          const cls = (row.cls||'');
+          tr += `<td class="center ${cls}">${val==null?'—':Number(val).toFixed(1)}</td>`;
+        }
+        tr += '</tr>';
+        return tr;
+      }).join('');
     }
 
-    function rows(cols){
+    function applyStickyMeta(){
+      // Make the 7 meta rows sticky under the table header, stacking their offsets
+      const theadH = document.getElementById('thead').getBoundingClientRect().height;
+      const rows = Array.from(document.querySelectorAll('#tbody tr.meta-row'));
+      let top = theadH;
+      for(const r of rows){
+        const h = r.getBoundingClientRect().height || 36;
+        for(const td of r.children){ td.style.position='sticky'; td.style.top = top+'px'; td.style.zIndex=2; td.style.background='#fff'; }
+        top += h;
+      }
+    }
+
+    function modelRows(cols){
       const q = document.getElementById('modelSearch').value.trim().toLowerCase();
       const data = [];
       for(const m of allModels){
         if(q && !m.toLowerCase().includes(q)) continue;
+        const cat = categories[m];
+        if(selectedCats.size>0 && !selectedCats.has(cat)) continue;
         const {g,s,b} = computeMedalsForModel(m);
         const record = {model:m,g,s,b,scores:{}};
         for(const c of cols){
@@ -270,37 +447,48 @@
         }
         data.push(record);
       }
-      // sort
       if(!sortKey) data.sort(defaultComparator); else data.sort((a,b)=>valueComparator(a,b,sortKey));
 
-      // build html
       const tb = [];
       for(const r of data){
-        let tr = `<tr><td><span class="chip ${catClass(r.model)}">${r.model}</span></td>`+
-                 `<td class="right">${r.g}</td><td class="right">${r.s}</td><td class="right">${r.b}</td>`;
+        let tr = `<tr><td class="left"><span class="chip ${catClass(r.model)}">${r.model}</span></td>`+
+                 `<td class="center">${r.g}</td><td class="center">${r.s}</td><td class="center">${r.b}</td>`;
         for(const c of cols){
           const key = colKey(c.n,c.y); const box = ctx[key]; const val = r.scores[key];
-          const cls = cellClass(val, box?.thr||{});
-          tr += `<td class="right ${cls}">${val==null?'—':val.toFixed(1)}</td>`;
+          const cls = (val==null)?'':(val>=box.thr.gold?'med-gold':val>=box.thr.silver?'med-silver':val>=box.thr.bronze?'med-bronze':'');
+          tr += `<td class="center ${cls}">${val==null?'—':val.toFixed(1)}</td>`;
         }
         tr += '</tr>';
         tb.push(tr);
       }
-      document.getElementById('tbody').innerHTML = tb.join('');
+      return tb.join('');
     }
 
     function render(){
       const cols = humanCols();
       header(cols);
-      rows(cols);
+      const html = metaRows(cols) + modelRows(cols);
+      document.getElementById('tbody').innerHTML = html;
+      applyStickyMeta();
     }
 
     function attachFilters(){
-      document.getElementById('yearSel').addEventListener('change', ()=>{ render(); });
-      document.getElementById('modelSearch').addEventListener('input', ()=>{ render(); });
+      document.getElementById('yearSel').addEventListener('change', render);
+      document.getElementById('modelSearch').addEventListener('input', render);
     }
 
-    // Tabs (placeholder)
+    function setupTiles(){
+      document.getElementById('btnHiPhO').addEventListener('click',()=>{
+        document.getElementById('tab-hipho').click();
+        document.getElementById('panel-hipho').scrollIntoView({behavior:'smooth'});
+      });
+      document.getElementById('btnPHYSICS').addEventListener('click',()=>{
+        document.getElementById('tab-physics').click();
+        document.getElementById('panel-physics').scrollIntoView({behavior:'smooth'});
+      });
+    }
+
+    // Tabs
     document.getElementById('tab-hipho').addEventListener('click',()=>{
       document.getElementById('tab-hipho').classList.add('active');
       document.getElementById('tab-physics').classList.remove('active');
@@ -316,11 +504,16 @@
 
     // ===== Init
     (async function init(){
+      wireLinks();
       await loadData();
       buildCompPills();
+      buildCatPills();
       attachFilters();
       attachSortHandlers();
+      setupTiles();
       render();
+      // re-apply sticky on resize (row heights may change)
+      new ResizeObserver(()=>applyStickyMeta()).observe(document.getElementById('tableWrap'));
     })();
   </script>
 </body>
