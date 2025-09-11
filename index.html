@@ -390,10 +390,6 @@
       html += '</tr>';
 
       const rows = [
-        {key:'full_human', name:'Full Mark (Human)', cls:''},
-        {key:'full_model', name:'Full Mark (Model)', cls:''},
-        {key:'top1_human', name:'Top-1 Score (Human)', cls:''},
-        {key:'top1_model', name:'Top-1 Score (Model)', cls:''},
         {key:'gold',  name:'Gold Medal',   cls:'med-gold',   type:'thr'},
         {key:'silver',name:'Silver Medal', cls:'med-silver', type:'thr'},
         {key:'bronze',name:'Bronze Medal', cls:'med-bronze', type:'thr'}
@@ -422,11 +418,11 @@
         for(const th of r.children){
           th.style.position = 'sticky';
           th.style.top = top + 'px';
-          th.style.zIndex = 5; // above body cells
+          th.style.zIndex = 1; // above body cells
         }
         // ensure the first sticky-left header cell is above others
         const first = r.children[0];
-        if(first){ first.style.zIndex = 6; }
+        if(first){ first.style.zIndex = 2; }
         top += h;
       }
     }
