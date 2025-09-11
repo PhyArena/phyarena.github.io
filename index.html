@@ -390,7 +390,7 @@
       for (const c of cols){ html += make(`${c.n} ${c.y}`, `${c.n}-${c.y}`); }
       html += '</tr>';
 
-      // 接着是 7 条“固定”信息（放在 thead 里）
+      // 7 条“固定”信息放在 thead 里（成为表头的一部分，不随滚动）
       const rows = [
         {key:'full_human', name:'Full Mark (Human)', cls:''},
         {key:'full_model', name:'Full Mark (Model)', cls:''},
@@ -413,51 +413,8 @@
         html += `</tr>`;
       }
 
-      document.getElementById('thead').innerHTML = html;
-    }
-
-    function metaRows(cols){
-      // Build the 7 sticky rows above models
-      const labels = [
-        {key:'full_human', name:'Full Mark (Human)', cls:''},
-        {key:'full_model', name:'Full Mark (Model)', cls:''},
-        {key:'top1_human', name:'Top‑1 Score (Human)', cls:''},
-        {key:'top1_model', name:'Top‑1 Score (Model)', cls:''},
-        {key:'gold', name:'Gold Medal', cls:'med-gold'},
-        {key:'silver', name:'Silver Medal', cls:'med-silver'},
-        {key:'bronze', name:'Bronze Medal', cls:'med-bronze'}
-      ];
-      return labels.map((row,idx)=>{
-        let tr = `<tr class="meta-row" data-idx="${idx}"><td class="left">${row.name}</td>`;
-        // medal counts columns placeholders (3 medal cols occupy after model col)
-        tr += '<td class="center">—</td><td class="center">—</td><td class="center">—</td>';
-        for(const c of cols){
-          const box = ctx[colKey(c.n,c.y)];
-          let val = null;
-          if(row.key==='gold'||row.key==='silver'||row.key==='bronze'){
-            val = box?.thr?.[row.key] ?? null;
-          }else{
-            val = box?.meta?.[row.key] ?? null;
-          }
-          const cls = (row.cls||'');
-          tr += `<td class="center ${cls}">${val==null?'—':Number(val).toFixed(1)}</td>`;
-        }
-        tr += '</tr>';
-        return tr;
-      }).join('');
-    }
-
-    function applyStickyMeta(){
-      // Make the 7 meta rows sticky under the table header, stacking their offsets
-      const theadH = document.getElementById('thead').getBoundingClientRect().height;
-      const rows = Array.from(document.querySelectorAll('#tbody tr.meta-row'));
-      let top = theadH;
-      for(const r of rows){
-        const h = r.getBoundingClientRect().height || 36;
-        for(const td of r.children){ td.style.position='sticky'; td.style.top = top+'px'; td.style.zIndex=2; td.style.background='#fff'; }
-        top += h;
-      }
-    }
+  document.getElementById('thead').innerHTML = html;
+}
 
     function modelRows(cols){
       const q = document.getElementById('modelSearch').value.trim().toLowerCase();
