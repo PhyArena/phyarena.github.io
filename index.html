@@ -70,6 +70,7 @@
     table{border-collapse:separate;border-spacing:0;width:100%;background:#fff}
     th,td{padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
     thead th{position:sticky;top:0;background:#fff;z-index:3;font-weight:700;border-bottom:1px solid var(--line)}
+    thead tr.metahead th{font-weight:600}
     tbody tr:hover td{background:#fcfcff}
     th:first-child, td:first-child{position:sticky;left:0;background:#fff;z-index:2}
     thead th:first-child{z-index:4}
@@ -125,10 +126,10 @@
       <div class="logo-pad" aria-hidden="true"></div>
     </header>
 
-    <!-- FEATURES (centered, punchier) -->
+    <!-- FEATURES -->
     <div class="features">
-      <div class="feature-row"><div class="feature-icon">⚛️</div><div class="feature-text"><b>First Physics‑Olympiad leaderboard</b> — 13 physics Olympiads from 2024–2025 with <b>official medal cutoffs</b>.</div></div>
-      <div class="feature-row"><div class="feature-icon">🤝</div><div class="feature-text"><b>Direct human‑model comparison</b> — HiPhO benchmarks (M)LLM exam scores against <b>human contestants</b>.</div></div>
+      <div class="feature-row"><div class="feature-icon">⚛️</div><div class="feature-text"><b>First Physics-Olympiad leaderboard</b> — 13 physics Olympiads from 2024–2025 with <b>official medal cutoffs</b>.</div></div>
+      <div class="feature-row"><div class="feature-icon">🤝</div><div class="feature-text"><b>Direct human-model comparison</b> — HiPhO benchmarks (M)LLM exam scores against <b>human contestants</b>.</div></div>
       <div class="feature-row"><div class="feature-icon">📚</div><div class="feature-text"><b>Rich difficulty spectrum</b> — PHYSICS spans <b>high school, Olympiad, undergraduate, and graduate levels</b>.</div></div>
     </div>
 
@@ -172,9 +173,9 @@
 
       <div class="legend">
         <span>Legend:</span>
-        <span class="chip cat-closed">Closed‑source MLLM</span>
-        <span class="chip cat-open-mlm">Open‑source MLLM</span>
-        <span class="chip cat-open-llm">Open‑source LLM</span>
+        <span class="chip cat-closed">Closed-source MLLM</span>
+        <span class="chip cat-open-mlm">Open-source MLLM</span>
+        <span class="chip cat-open-llm">Open-source LLM</span>
       </div>
 
       <div class="table-wrap" id="tableWrap">
@@ -183,7 +184,7 @@
           <tbody id="tbody"></tbody>
         </table>
       </div>
-      <div class="muted" style="margin-top:8px">Cells are colored by medal thresholds of each contest. Medal counts (🥇/🥈/🥉) update with current filters. Default order: Gold ↓, then Silver ↓, Bronze ↓; tie‑break by IPhO 2025 score ↓.</div>
+      <div class="muted" style="margin-top:8px">Cells are colored by medal thresholds of each contest. Medal counts (🥇/🥈/🥉) update with current filters. Default order: Gold ↓, then Silver ↓, Bronze ↓; tie-break by IPhO 2025 score ↓.</div>
     </section>
 
     <!-- PHYSICS Panel -->
@@ -200,7 +201,7 @@
         It features recent Physics Olympiad exams and curated problem sets, offering a comprehensive evaluation.
       </p>
       <p style="max-width:900px;margin:0 auto 12px;text-align:left">
-        We provide two complementary benchmarks. Click the links below to explore datasets, code, and papers.
+        We provide two complementary benchmarks. Click the links below to explore datasets, projects, and papers.
       </p>
 
       <h3 style="text-align:center">HiPhO — Physics Olympiad (multimodal)</h3>
@@ -211,7 +212,7 @@
         <a class="tile" id="linkHiphoPaper" href="#" target="_blank" style="flex:0 0 200px"><h3 style="font-size:18px">Paper</h3><div class="sub">pdf</div></a>
       </div>
 
-      <h3 style="text-align:center">PHYSICS — Mixed Difficulty (text‑only)</h3>
+      <h3 style="text-align:center">PHYSICS — Mixed Difficulty (text-only)</h3>
       <p style="max-width:900px;margin:0 auto;text-align:left">PHYSICS spans high-school, Olympiad, undergraduate, and graduate levels, offering text-only problems that test scaling and generalization beyond Olympiad exams. It is curated with exercises from over 100 textbooks through a carefully designed pipeline for quality control.</p>
       <div style="display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:10px 0 0">
         <a class="tile" id="linkPhysDs" href="#" target="_blank" style="flex:0 0 200px"><h3 style="font-size:18px">Hugging Face</h3><div class="sub">dataset</div></a>
@@ -336,7 +337,7 @@
       for(const label of CAT_LABELS){
         const el = document.createElement('button');
         el.className = 'pill active';
-        el.textContent = label.replace('-','‑');
+        el.textContent = label.replace('-','-');
         el.addEventListener('click', ()=>{
           if(selectedCats.has(label)){ selectedCats.delete(label); el.classList.remove('active'); }
           else { selectedCats.add(label); el.classList.add('active'); }
@@ -380,17 +381,15 @@
       return (sortDir==='asc'?(A-B):(B-A));
     }
 
-    // ===== Render
+    // ===== Header: first row (sortables) + 7 fixed meta rows inside THEAD
     function header(cols){
       const make = (label,key,align='center') =>
         `<th class="th-sort ${sortKey===key?sortDir:''} ${align==='left'?'left':'center'}" data-key="${key}">${label}<span class="arrow">▾</span></th>`;
 
-      // 第一行：可排序列头
       let html = '<tr>' + make('Model','model','left') + make('🥇 Gold','gold') + make('🥈 Silver','silver') + make('🥉 Bronze','bronze');
       for (const c of cols){ html += make(`${c.n} ${c.y}`, `${c.n}-${c.y}`); }
       html += '</tr>';
 
-      // 7 条“固定”信息放在 thead 里（成为表头的一部分，不随滚动）
       const rows = [
         {key:'full_human', name:'Full Mark (Human)', cls:''},
         {key:'full_model', name:'Full Mark (Model)', cls:''},
@@ -413,9 +412,10 @@
         html += `</tr>`;
       }
 
-  document.getElementById('thead').innerHTML = html;
-}
+      document.getElementById('thead').innerHTML = html;
+    }
 
+    // ===== Body rows (models only)
     function modelRows(cols){
       const q = document.getElementById('modelSearch').value.trim().toLowerCase();
       const data = [];
@@ -451,9 +451,7 @@
     function render(){
       const cols = humanCols();
       header(cols);
-      const html = metaRows(cols) + modelRows(cols);
-      document.getElementById('tbody').innerHTML = html;
-      applyStickyMeta();
+      document.getElementById('tbody').innerHTML = modelRows(cols); // 仅渲染模型行
     }
 
     function attachFilters(){
@@ -496,8 +494,6 @@
       attachSortHandlers();
       setupTiles();
       render();
-      // re-apply sticky on resize (row heights may change)
-      new ResizeObserver(()=>applyStickyMeta()).observe(document.getElementById('tableWrap'));
     })();
   </script>
 </body>
