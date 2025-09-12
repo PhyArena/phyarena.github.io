@@ -109,6 +109,14 @@
     .center{text-align:center}
     .left{text-align:left}
 
+    .th-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      line-height: 1.2;
+    }
+
     /* Section title */
     .section-title{text-align:center;font-size:34px;margin:6px 0 10px}
   </style>
@@ -396,8 +404,12 @@
 
     // header with 7 meta rows
     function header(cols){
-      const make = (label,key,align='center') =>
-        `<th class="th-sort ${sortKey===key?sortDir:''} ${align==='left'?'left':'center'}" data-key="${key}">${label}<span class="arrow">▾</span></th>`;
+      const make = (label, key, align = 'center') =>
+        `<th class="th-sort ${sortKey === key ? sortDir : ''} ${align === 'left' ? 'left' : 'center'}" data-key="${key}">
+          <div class="th-inner">
+            ${label}<span class="arrow">▾</span>
+          </div>
+        </th>`;
       let html = '<tr>' + make('Model','model','left') + make('🥇','gold') + make('🥈','silver') + make('🥉','bronze');
       for (const c of cols){ html += make(`${c.n}<br>${c.y}`, `${c.n}-${c.y}`); }
       html += '</tr>';
