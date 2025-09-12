@@ -492,11 +492,6 @@
       if(c==='closed-source MLLM') return 'cat-blue';
       if(c==='open-source MLLM') return 'cat-green';
       if(c==='open-source LLM') return 'cat-purple';
-      // PHYSICS categories
-      if(c==='closed-source reasoning model') return 'cat-blue';
-      if(c==='open-source reasoning model') return 'cat-green';
-      if(c==='closed-source chat model') return 'cat-purple';
-      if(c==='open-source chat model') return 'cat-yellow';
       return '';
     }
 
@@ -672,8 +667,8 @@
 
     const PHYSICS_CAT_LABELS = [
       'closed-source reasoning model',
-      'closed-source chat model',
       'open-source reasoning model',
+      'closed-source chat model',
       'open-source chat model'
     ];
 
@@ -733,16 +728,34 @@
     }
 
     function physHeader(cols){
-      const make = (label, key, align='center') =>
-        `<th class="th-sort ${physSortKey===key ? physSortDir : ''} ${align==='left'?'left':'center'}" data-key="${key}">
-          <div class="th-inner">${label}<span class="arrow">▾</span></div>
-        </th>`;
-      let html = '<tr>'+ make('Model','model','left');
-      for(const c of cols){
-        const short = c.sub; // already short labels
-        html += make(short, `${c.domain}|${c.sub}`);
+      // Define top-level groups
+      const groups = [
+        { title: 'Accuracy', subs: ['Hybrid Acc', 'Rule Acc'] },
+        { title: 'Subject', subs: ['Mod.', 'Mech.', 'Electromag.', 'Thermo.', 'Optics'] },
+        { title: 'Difficulty Level', subs: ['1','2','3','4'] },
+        { title: 'Language', subs: ['EN','ZH'] }
+      ];
+
+      // First header row (colspan)
+      let html = '<tr><th rowspan="2" class="left">Model</th>';
+      for(const g of groups){
+        html += `<th colspan="${g.subs.length}" class="center">${g.title}</th>`;
       }
       html += '</tr>';
+
+      // Second header row (actual clickable columns)
+      html += '<tr>';
+      for(const g of groups){
+        for(const sub of g.subs){
+          const key = `${g.title}|${sub}`;
+          const sortCls = (physSortKey===key ? physSortDir : '');
+          html += `<th class="th-sort ${sortCls} center" data-key="${key}">
+                    <div class="th-inner">${sub}<span class="arrow">▾</span></div>
+                  </th>`;
+        }
+      }
+      html += '</tr>';
+
       document.getElementById('physicsThead').innerHTML = html;
     }
 
