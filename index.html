@@ -337,7 +337,7 @@
           </select>
         </div>
         <div>
-          <label>Sub-category</label><br>
+          <label>Sub-domain</label><br>
           <div class="pillgroup" id="subcatPills"></div>
         </div>
         <div>
@@ -672,8 +672,8 @@
 
     const PHYSICS_CAT_LABELS = [
       'closed-source reasoning model',
-      'closed-source chat model',
       'open-source reasoning model',
+      'closed-source chat model',
       'open-source chat model'
     ];
 
@@ -718,31 +718,55 @@
     }
 
     function physActiveCols(){
-      if(physSelectedDomain==='all'){
-        return PHYSICS_COLS_ORDER.map(label=>{
-          // map label to domain+sub
-          if(PHYSICS_DOMAINS['Accuracy'].includes(label)) return {domain:'Accuracy', sub:label};
-          if(PHYSICS_DOMAINS['Subject'].includes(label)) return {domain:'Subject', sub:label};
-          if(PHYSICS_DOMAINS['Difficulty Level'].includes(label)) return {domain:'Difficulty Level', sub:label};
-          return {domain:'Language', sub:label};
-        });
+      const out = [];
+      const pushCols = (domain, arr) => {
+        for (const sub of arr){
+          if (physSelectedSubs.has(sub)) out.push({domain, sub});
+        }
+      };
+
+      if (physSelectedDomain === 'all'){
+        pushCols('Accuracy', PHYSICS_DOMAINS['Accuracy']);
+        pushCols('Subject', PHYSICS_DOMAINS['Subject']);
+        pushCols('Difficulty Level', PHYSICS_DOMAINS['Difficulty Level']);
+        pushCols('Language', PHYSICS_DOMAINS['Language']);
+      } else {
+        pushCols(physSelectedDomain, PHYSICS_DOMAINS[physSelectedDomain] || []);
       }
-      // domain-specific
-      const list = PHYSICS_DOMAINS[physSelectedDomain] || [];
-      return list.filter(s=>physSelectedSubs.has(s)).map(s=>({domain:physSelectedDomain, sub:s}));
+      // 保持既定的从左到右顺序
+      out.sort((a,b)=> PHYSICS_COLS_ORDER.indexOf(a.sub) - PHYSICS_COLS_ORDER.indexOf(b.sub));
+      return out;
     }
 
     function physHeader(cols){
-      const make = (label, key, align='center') =>
-        `<th class="th-sort ${physSortKey===key ? physSortDir : ''} ${align==='left'?'left':'center'}" data-key="${key}">
-          <div class="th-inner">${label}<span class="arrow">▾</span></div>
-        </th>`;
-      let html = '<tr>'+ make('Model','model','left');
-      for(const c of cols){
-        const short = c.sub; // already short labels
-        html += make(short, `${c.domain}|${c.sub}`);
+      // 计算各大类合并列数
+      const groups = [];
+      for (const c of cols){
+        const last = groups[groups.length-1];
+        if (last && last.domain === c.domain) last.span++;
+        else groups.push({domain:c.domain, span:1});
+      }
+
+      // 顶部大类行：Model 占两行
+      let html = '<tr>';
+      html += `<th rowspan="2" class="th-sort ${physSortKey==='model'?physSortDir:''} left" data-key="model">
+                <div class="th-inner">Model<span class="arrow">▾</span></div>
+              </th>`;
+      for (const g of groups){
+        html += `<th class="center" colspan="${g.span}">${g.domain}</th>`;
       }
       html += '</tr>';
+
+      // 第二行：小类可排序
+      html += '<tr>';
+      for (const c of cols){
+        const key = `${c.domain}|${c.sub}`;
+        html += `<th class="th-sort ${physSortKey===key?physSortDir:''} center" data-key="${key}">
+                  <div class="th-inner">${c.sub}<span class="arrow">▾</span></div>
+                </th>`;
+      }
+      html += '</tr>';
+
       document.getElementById('physicsThead').innerHTML = html;
     }
 
@@ -814,24 +838,22 @@
       const holder = document.getElementById('subcatPills');
       holder.innerHTML = '';
 
-      // decide what to show
-      let subs = [];
-      if(physSelectedDomain==='all'){
-        // show all as quick toggles
-        subs = PHYSICS_COLS_ORDER.slice();
-      }else{
-        subs = (PHYSICS_DOMAINS[physSelectedDomain] || []).slice();
+      const subs = (physSelectedDomain==='all')
+        ? PHYSICS_COLS_ORDER.slice()
+        : (PHYSICS_DOMAINS[physSelectedDomain] || []).slice();
+
+      // 域切换时，若当前选择越界或为空，重置为该域的全部
+      const scope = new Set(subs);
+      if (![...physSelectedSubs].every(s=>scope.has(s)) || physSelectedSubs.size===0){
+        physSelectedSubs = new Set(subs);
       }
 
-      // ensure default all selected when switching domain
-      physSelectedSubs = new Set(subs.length ? subs : PHYSICS_COLS_ORDER);
-
-      for(const s of subs){
+      for (const s of subs){
         const el = document.createElement('button');
-        el.className = 'pill active';
+        el.className = 'pill ' + (physSelectedSubs.has(s) ? 'active' : '');
         el.textContent = s;
         el.addEventListener('click', ()=>{
-          if(physSelectedSubs.has(s)){ physSelectedSubs.delete(s); el.classList.remove('active'); }
+          if (physSelectedSubs.has(s)){ physSelectedSubs.delete(s); el.classList.remove('active'); }
           else { physSelectedSubs.add(s); el.classList.add('active'); }
           physRender();
         });
@@ -850,11 +872,19 @@
     }
 
     function physAttachFilters(){
-      document.getElementById('domainSel').addEventListener('change', (e)=>{
+      document.getElementById('domainSel').addEventListener('change',(e)=>{
         physSelectedDomain = e.target.value;
         physBuildSubcatPills();
-        // rebuild sort default when switching to Accuracy domain
-        if(physSelectedDomain==='Accuracy') { physSortKey = 'Accuracy|Hybrid Acc'; physSortDir='desc'; }
+
+        if (physSelectedDomain === 'Accuracy'){
+          physSortKey = 'Accuracy|Hybrid Acc'; physSortDir = 'desc';
+        } else if (physSelectedDomain === 'all'){
+          physSortKey = 'Accuracy|Hybrid Acc'; physSortDir = 'desc';
+        } else {
+          const first = (PHYSICS_DOMAINS[physSelectedDomain]||[])[0];
+          physSortKey = first ? `${physSelectedDomain}|${first}` : 'model';
+          physSortDir = (physSortKey==='model' ? 'asc' : 'desc');
+        }
         physRender();
       });
       document.getElementById('physModelSearch').addEventListener('input', physRender);
