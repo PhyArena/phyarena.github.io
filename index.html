@@ -205,7 +205,11 @@
           <tbody id="tbody"></tbody>
         </table>
       </div>
-      <div class="muted" style="margin-top:8px">Cells are colored by medal thresholds of each contest. Medal counts (🥇/🥈/🥉) update with current filters. Default order: Gold ↓, then Silver ↓, Bronze ↓; tie-break by IPhO 2025 score ↓.</div>
+      <div class="muted" style="margin-top:8px; line-height:1.6">
+        1. Cells are colored according to the medal thresholds of each contest. Medal counts (🥇/🥈/🥉) dynamically update based on the current filters. Models are ranked by default in the order: Gold ↓, then Silver ↓, then Bronze ↓; ties are broken by IPhO 2025 score ↓.<br><br>
+        2. In this work, we evaluate only the theoretical parts of the Olympiad exams. Medal cutoffs are derived from the theoretical scores of human medalists.<br><br>
+        3. For each model, we conducted eight independent inference runs. We computed the average score for each problem, and then summed all problem scores to obtain the final exam score.
+      </div>
     </section>
 
     <!-- PHYSICS Panel -->
