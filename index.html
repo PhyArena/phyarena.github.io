@@ -14,14 +14,14 @@
 
     /* Hero */
     header.hero {
-      height: 100vh;
+      min-height: 100vh;
       width: 100vw;   /* ← 改成100vw */
       margin: 0;      /* ← 确保没受其他外边距影响 */
       background: linear-gradient(180deg, #82b2ec 0%, #f6f9ff 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 40px 20px;
+      padding: 40px 20px 60px;
       box-sizing: border-box;
       text-align: center;
     }
@@ -50,6 +50,17 @@
       font-size: 22px;
       font-weight: 600;    /* ←加粗 */
       max-width: 1280px;
+    }
+
+    @media (max-width: 600px) {
+      header.hero h1 {
+        font-size: 48px; /* 手机端更小的标题 */
+      }
+
+      header.hero .subtitle {
+        font-size: 16px;
+        padding: 0 12px;
+      }
     }
 
     body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
