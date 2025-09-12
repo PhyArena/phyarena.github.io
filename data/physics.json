@@ -4,7 +4,7 @@
     "version": "2025-09-12"
   },
   "model_categories": {
-    "Gemini-2.5-Pro": "closed-source reasoning model",
+    "Gemini-2.5-Pro-0325": "closed-source reasoning model",
     "Grok-3 (Think)": "closed-source reasoning model",
     "Claude-3.7-Sonnet-Thinking": "closed-source reasoning model",
     "o3 (high)": "closed-source reasoning model",
@@ -31,7 +31,7 @@
   "metrics": {
     "Accuracy": {
       "Rule Acc": {
-        "Gemini-2.5-Pro": 23.5,
+        "Gemini-2.5-Pro-0325": 23.5,
         "Grok-3 (Think)": 25.1,
         "Claude-3.7-Sonnet-Thinking": 21.6,
         "o3 (high)": 23.3,
@@ -56,7 +56,7 @@
         "DeepSeek-V3": 22.5
       },
       "Hybrid Acc": {
-        "Gemini-2.5-Pro": 45.1,
+        "Gemini-2.5-Pro-0325": 45.1,
         "Grok-3 (Think)": 46.4,
         "Claude-3.7-Sonnet-Thinking": 48.8,
         "o3 (high)": 58.9,
@@ -83,7 +83,7 @@
     },
     "Subject": {
       "Mod.": {
-        "Gemini-2.5-Pro": 37.3,
+        "Gemini-2.5-Pro-0325": 37.3,
         "Grok-3 (Think)": 40.8,
         "Claude-3.7-Sonnet-Thinking": 44.8,
         "o3 (high)": 48.8,
@@ -108,7 +108,7 @@
         "DeepSeek-V3": 47.0
       },
       "Mech.": {
-        "Gemini-2.5-Pro": 49.0,
+        "Gemini-2.5-Pro-0325": 49.0,
         "Grok-3 (Think)": 54.0,
         "Claude-3.7-Sonnet-Thinking": 51.5,
         "o3 (high)": 62.8,
@@ -133,7 +133,7 @@
         "DeepSeek-V3": 51.8
       },
       "Electromag.": {
-        "Gemini-2.5-Pro": 51.8,
+        "Gemini-2.5-Pro-0325": 51.8,
         "Grok-3 (Think)": 56.8,
         "Claude-3.7-Sonnet-Thinking": 53.3,
         "o3 (high)": 66.8,
@@ -158,7 +158,7 @@
         "DeepSeek-V3": 49.3
       },
       "Thermo.": {
-        "Gemini-2.5-Pro": 35.5,
+        "Gemini-2.5-Pro-0325": 35.5,
         "Grok-3 (Think)": 35.0,
         "Claude-3.7-Sonnet-Thinking": 38.5,
         "o3 (high)": 56.5,
@@ -183,7 +183,7 @@
         "DeepSeek-V3": 35.3
       },
       "Optics": {
-        "Gemini-2.5-Pro": 51.8,
+        "Gemini-2.5-Pro-0325": 51.8,
         "Grok-3 (Think)": 45.5,
         "Claude-3.7-Sonnet-Thinking": 55.8,
         "o3 (high)": 59.8,
@@ -210,7 +210,7 @@
     },
     "Difficult Level": {
       "1": {
-        "Gemini-2.5-Pro": 77.1,
+        "Gemini-2.5-Pro-0325": 77.1,
         "Grok-3 (Think)": 56.3,
         "Claude-3.7-Sonnet-Thinking": 68.8,
         "o3 (high)": 87.5,
@@ -235,7 +235,7 @@
         "DeepSeek-V3": 79.2
       },
       "2": {
-        "Gemini-2.5-Pro": 43.4,
+        "Gemini-2.5-Pro-0325": 43.4,
         "Grok-3 (Think)": 54.8,
         "Claude-3.7-Sonnet-Thinking": 53.6,
         "o3 (high)": 71.8,
@@ -260,7 +260,7 @@
         "DeepSeek-V3": 51.0
       },
       "3": {
-        "Gemini-2.5-Pro": 63.2,
+        "Gemini-2.5-Pro-0325": 63.2,
         "Grok-3 (Think)": 55.2,
         "Claude-3.7-Sonnet-Thinking": 58.9,
         "o3 (high)": 73.1,
@@ -285,7 +285,7 @@
         "DeepSeek-V3": 58.4
       },
       "4": {
-        "Gemini-2.5-Pro": 38.5,
+        "Gemini-2.5-Pro-0325": 38.5,
         "Grok-3 (Think)": 42.3,
         "Claude-3.7-Sonnet-Thinking": 44.2,
         "o3 (high)": 52.1,
@@ -312,7 +312,7 @@
     },
     "Language": {
       "EN": {
-        "Gemini-2.5-Pro": 44.7,
+        "Gemini-2.5-Pro-0325": 44.7,
         "Grok-3 (Think)": 47.9,
         "Claude-3.7-Sonnet-Thinking": 48.7,
         "o3 (high)": 58.7,
@@ -337,7 +337,7 @@
         "DeepSeek-V3": 46.7
       },
       "ZH": {
-        "Gemini-2.5-Pro": 45.2,
+        "Gemini-2.5-Pro-0325": 45.2,
         "Grok-3 (Think)": 44.9,
         "Claude-3.7-Sonnet-Thinking": 48.8,
         "o3 (high)": 59.1,
