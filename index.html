@@ -189,9 +189,10 @@
 
     /* model chips */
     .chip{display:inline-block;border:1px solid var(--chip-border);border-radius:10px;padding:2px 8px;background:var(--chip)}
-    .cat-closed{background:#cce9ff;border-color:#38bdf8;color:#064e7a}
-    .cat-open-mlm{background:#c9f9df;border-color:#34d399;color:#065f46}
-    .cat-open-llm{background:#e9d5ff;border-color:#c084fc;color:#6b21a8}
+    .cat-blue{background:#cce9ff;border-color:#38bdf8;color:#064e7a}
+    .cat-green{background:#c9f9df;border-color:#34d399;color:#065f46}
+    .cat-purple{background:#e9d5ff;border-color:#c084fc;color:#6b21a8}
+    .cat-yellow{background:#fff7cc;border-color:#fbbf24;color:#92400e}
 
     /* Medal cells – stronger */
     .med-gold{background:linear-gradient(180deg,var(--gold-weak),#fff)}
@@ -297,9 +298,9 @@
 
       <div class="legend">
         <span>Legend:</span>
-        <span class="chip cat-closed">Closed-source MLLM</span>
-        <span class="chip cat-open-mlm">Open-source MLLM</span>
-        <span class="chip cat-open-llm">Open-source LLM</span>
+        <span class="chip cat-blue">Closed-source MLLM</span>
+        <span class="chip cat-green">Open-source MLLM</span>
+        <span class="chip cat-purple">Open-source LLM</span>
       </div>
 
       <div class="table-wrap" id="tableWrap">
@@ -314,8 +315,6 @@
         3. Only the theoretical components of each exam are evaluated; experimental and diagram-drawing problems are excluded, so Full Mark (Model) ≤ Full Mark (Human).<br>
         4. Each model was run 8 times. Problem scores were averaged and summed to compute the final exam score.
       </div>
-
-
     </section>
 
     <!-- PHYSICS Panel -->
@@ -325,7 +324,52 @@
           PHYSICS Benchmark
         </a>
       </h3>
-      <p class="muted">Coming soon.</p>
+
+      <div class="controls">
+        <div>
+          <label for="domainSel">Domain</label><br>
+          <select id="domainSel">
+            <option value="all">All</option>
+            <option value="Accuracy">Accuracy</option>
+            <option value="Subject">Subject</option>
+            <option value="Difficulty">Difficulty Level</option>
+            <option value="Language">Language</option>
+          </select>
+        </div>
+        <div>
+          <label>Sub-category</label><br>
+          <div class="pillgroup" id="subcatPills"></div>
+        </div>
+        <div>
+          <label>Category</label><br>
+          <div class="pillgroup" id="physCatPills"></div>
+        </div>
+        <div>
+          <label for="physModelSearch">Model</label><br>
+          <input id="physModelSearch" type="text" placeholder="Filter model…" />
+        </div>
+        <div class="muted">Metric: <b>accuracy (%)</b>. Tip: click any column header to sort.</div>
+      </div>
+
+      <div class="legend">
+        <span>Legend:</span>
+        <span class="chip cat-blue">Closed-source reasoning model</span>
+        <span class="chip cat-green">Open-source reasoning model</span>
+        <span class="chip cat-purple">Closed-source chat model</span>
+        <span class="chip cat-yellow">Open-source chat model</span>
+      </div>
+
+      <div class="table-wrap" id="physicsTableWrap">
+        <table id="physicsTbl">
+          <thead id="physicsThead"></thead>
+          <tbody id="physicsTbody"></tbody>
+        </table>
+      </div>
+      <div class="muted" style="margin-top:8px; line-height:1.6"> 
+        1. Models are sorted by <b>Hybrid Acc</b> ↓ by default.<br>
+        2. You can filter by domain (Accuracy / Subject / Difficulty Level / Language) and select specific sub-categories.<br>
+        3. Values are rounded to 1 decimal place, consistent with the PHYSICS dataset paper.
+      </div>
     </section>
 
     <!-- About -->
@@ -442,9 +486,15 @@
 
     function catClass(name){
       const c = categories[name];
-      if(c==='closed-source MLLM') return 'cat-closed';
-      if(c==='open-source MLLM') return 'cat-open-mlm';
-      if(c==='open-source LLM') return 'cat-open-llm';
+      // HiPhO categories
+      if(c==='closed-source MLLM') return 'cat-blue';
+      if(c==='open-source MLLM') return 'cat-green';
+      if(c==='open-source LLM') return 'cat-purple';
+      // PHYSICS categories
+      if(c==='closed-source reasoning model') return 'cat-blue';
+      if(c==='open-source reasoning model') return 'cat-green';
+      if(c==='closed-source chat model') return 'cat-purple';
+      if(c==='open-source chat model') return 'cat-yellow';
       return '';
     }
 

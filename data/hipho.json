@@ -1,5 +1,5 @@
 {
-  "meta": { "dataset": "HiPhO", "version": "2025-09-11", "note": "Models ordered to match the LaTeX table." },
+  "meta": { "dataset": "HiPhO", "version": "2025-09-12"},
   "model_categories": {
     "Gemini-2.5-Pro": "closed-source MLLM",
     "Gemini-2.5-Flash": "closed-source MLLM",
