@@ -192,12 +192,15 @@
     .sticky-left{position:sticky;left:0;background:#fff}
     .table-wrap thead .sticky-left{z-index:9} /* 表头层级更高，避免被覆盖 */
 
-    /* 表体第一列（Model 值）固定在最左侧 */
-    .table-wrap tbody td:first-child{
+    /* 让表格形成定位上下文，sticky 在各浏览器更稳定 */
+    .table-wrap table{ position: relative; }
+
+    /* 表体中被标记为 sticky-left 的单元格，固定在最左侧 */
+    .table-wrap tbody .sticky-left{
       position: sticky;
       left: 0;
       background: #fff;
-      z-index: 2;   /* 低于表头，避免覆盖表头 */
+      z-index: 2;  /* 低于表头，避免覆盖表头 */
     }
 
     /* 避免把表头第二行的“第一个 th”（通常是 Hybrid Acc）也固定到最左 */
@@ -665,7 +668,8 @@
 
       const tb = [];
       for(const r of data){
-        let tr = `<tr><td class="left"><span class="chip ${catClassHipho(r.model)}">${r.model}</span></td>`+
+        // let tr = `<tr><td class="left"><span class="chip ${catClassHipho(r.model)}">${r.model}</span></td>`+
+        let tr = `<tr><td class="left sticky-left"><span class="chip ${catClassHipho(r.model)}">${r.model}</span></td>`+
                 `<td class="center">${r.g}</td><td class="center">${r.s}</td><td class="center">${r.b}</td>`;
         for(const c of cols){
           const key = hiphoColKey(c.n,c.y); const box = hiphoCtx[key]; const val = r.scores[key];
@@ -835,7 +839,8 @@
 
       const rows = [];
       for(const m of models){
-        let tr = `<tr><td class="left"><span class="chip ${catClassPhys(m)}">${m}</span></td>`;
+        // let tr = `<tr><td class="left"><span class="chip ${catClassPhys(m)}">${m}</span></td>`;
+        let tr = `<tr><td class="left sticky-left"><span class="chip ${catClassPhys(m)}">${m}</span></td>`;
         for(const c of cols){
           const v = physGetVal(m, c.domain, c.sub);
           tr += `<td class="center">${v==null?'—':v.toFixed(1)}</td>`;
