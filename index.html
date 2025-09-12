@@ -576,7 +576,7 @@
           <div class="th-inner">${label}<span class="arrow">▾</span></div>
         </th>`;
 
-      // 第一行：Model + 奖牌 + 各竞赛列
+      // 行1：Model（固定左侧）+ 奖牌 + 各竞赛列
       let html = '<tr>'
         + `<th class="th-sort ${hiphoSortKey==='model'?hiphoSortDir:''} left sticky-left" data-key="model">
             <div class="th-inner">Model<span class="arrow">▾</span></div>
@@ -587,7 +587,7 @@
       }
       html += '</tr>';
 
-      // 后续 meta 行：Full Mark / Cutoffs
+      // 行2+：Full Mark / Cutoffs
       const rows = [
         {key:'full_human', name:'Full Mark (Human)', cls:''},
         {key:'full_model', name:'Full Mark (Model)', cls:''},
@@ -595,7 +595,6 @@
         {key:'silver', name:'🥈 Silver Cutoff', cls:'med-silver', type:'thr'},
         {key:'bronze', name:'🥉 Bronze Cutoff', cls:'med-bronze', type:'thr'}
       ];
-
       for (const r of rows){
         html += `<tr class="metahead">
                   <th class="left sticky-left">${r.name}</th>
@@ -607,28 +606,26 @@
         }
         html += `</tr>`;
       }
-
       document.getElementById('thead').innerHTML = html;
     }
+
 
     // stack sticky header rows (key fix!)
     function stackStickyHeaderById(theadId){
       const thead = document.getElementById(theadId);
       const rows = Array.from(thead.querySelectorAll('tr'));
       let top = 0;
-      for(const r of rows){
+      for (const r of rows){
         const h = r.getBoundingClientRect().height || r.offsetHeight || 32;
-        for(const th of r.children){
+        for (const th of r.children){
           th.style.position = 'sticky';
           th.style.top = top + 'px';
-          th.style.zIndex = 5;
+          // 普通表头层级 5；固定左列（Model）层级更高，确保不会被覆盖
+          th.style.zIndex = th.classList.contains('sticky-left') ? 9 : 5;
         }
-        const first = r.children[0];
-        if(first){ first.style.zIndex = 6; }
         top += h;
       }
     }
-
 
     // models
     function hiphoModelRows(cols){
@@ -760,7 +757,7 @@
     }
 
     function physHeader(cols){
-      // 计算每个大类需要合并的列数（colspan）
+      // 统计大类的列跨度
       const groups = [];
       for (const c of cols){
         const last = groups[groups.length-1];
@@ -768,7 +765,7 @@
         else groups.push({domain:c.domain, span:1});
       }
 
-      // 顶行：Model（rowspan=2 + sticky-left）+ 大类分组
+      // 顶行：Model（rowspan=2 + 固定左侧）+ 大类标题
       let html = '<tr>';
       html += `<th rowspan="2" class="th-sort ${physSortKey==='model'?physSortDir:''} left sticky-left" data-key="model">
                 <div class="th-inner">Model<span class="arrow">▾</span></div>
@@ -790,6 +787,7 @@
 
       document.getElementById('physicsThead').innerHTML = html;
     }
+
 
     function physValue(model, key){
       if(key==='model') return model;
