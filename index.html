@@ -11,6 +11,47 @@
       --chip:#f3f4f6; --chip-border:#e5e7eb; --accent:#0ea5e9; --shadow:0 8px 30px rgba(2,6,23,.08);
     }
     *{box-sizing:border-box}
+
+    /* Hero */
+    header.hero {
+      height: 100vh;
+      width: 100vw;   /* ← 改成100vw */
+      margin: 0;      /* ← 确保没受其他外边距影响 */
+      background: linear-gradient(180deg, #82b2ec 0%, #f6f9ff 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .hero-inner {
+      width: 100%;
+      max-width: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    header.hero h1 {
+      margin: 0;
+      font-size: 100px; /* ↑更大 */
+      font-weight: 900; /* 加粗 */
+      letter-spacing: 0.5px;
+      color: var(--ink); /* 替代 #0f172a，用你已有的色板 */
+    }
+
+    header.hero .subtitle {
+      margin-top: 10px;
+      font-size: 22px;
+      font-weight: 600;    /* ←加粗 */
+      max-width: 1280px;
+    }
+
     body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
     a{color:var(--accent);text-decoration:none}
     .wrap{max-width:1280px;margin:0 auto;padding:24px}
@@ -27,19 +68,13 @@
     .topnav{margin-left:auto;display:flex;gap:22px}
     .topnav a{font-size:15px;color:var(--muted)}
 
-    /* Hero */
-    header.hero{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin:12px 0 10px}
-    header.hero .logo-pad{height:96px}
-    header.hero h1{margin:0;font-size:58px;letter-spacing:.5px;text-align:center}
-    header.hero .subtitle{margin:10px 0 6px;color:var(--muted);font-size:19px;text-align:center}
-
     /* Features */
     .features{max-width:900px;margin:22px auto 18px;display:flex;flex-direction:column;gap:14px;align-items:center}
     .feature-row{width:100%;display:flex;gap:12px;align-items:flex-start;background:linear-gradient(180deg,rgba(255,255,255,.9),#fff);border:1px solid var(--line);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow)}
     .feature-icon{font-size:18px;line-height:26px}
     .feature-text{font-size:16px}
 
-    .cta-tiles{display:flex;justify-content:center;gap:18px;margin:18px 0 24px}
+    .cta-tiles{display:flex;justify-content:center;gap:18px;margin:18px 0 24px;flex-wrap: wrap;}
     .tile{flex:0 0 280px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 16px;text-align:center;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s ease}
     .tile:hover{transform:translateY(-2px)}
     .tile h3{margin:0 0 6px;font-size:24px}
@@ -137,30 +172,28 @@
     </div>
   </div>
 
-  <div class="wrap">
-    <!-- HERO -->
-    <header class="hero">
-      <div class="logo-pad"></div>
-      <div>
-        <h1>PhyArena</h1>
-        <div class="subtitle">Benchmarking the physics reasoning of LLMs & MLLMs — from Olympiads to problem sets</div>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>PhyArena</h1>
+      <div class="subtitle">Benchmarking the physics reasoning of LLMs & MLLMs — from Olympiads to problem sets</div>
+
+      <!-- FEATURES moved inside -->
+      <div class="features">
+        <div class="feature-row"><div class="feature-icon">🏆</div><div class="feature-text"><b>First Physics-Olympiad leaderboard</b> — 13 physics Olympiads from 2024–2025 with <b>official medal cutoffs</b>.</div></div>
+        <div class="feature-row"><div class="feature-icon">🤖</div><div class="feature-text"><b>Direct human-model comparison</b> — HiPhO benchmarks (M)LLM exam scores against <b>human contestants</b>.</div></div>
+        <div class="feature-row"><div class="feature-icon">🎓</div><div class="feature-text"><b>Rich difficulty spectrum</b> — PHYSICS spans <b>high school, Olympiad, undergraduate, and graduate levels</b>.</div></div>
       </div>
-      <div class="logo-pad" aria-hidden="true"></div>
+
+      <!-- CTA TILES moved inside -->
+      <div class="cta-tiles">
+        <div class="tile" id="btnHiPhO"><h3>HiPhO</h3><div class="sub">Physics Olympiad</div></div>
+        <div class="tile" id="btnPHYSICS"><h3>PHYSICS</h3><div class="sub">Mixed Difficulty</div></div>
+      </div>
+    </div>
     </header>
 
-    <!-- FEATURES -->
-    <div class="features">
-      <div class="feature-row"><div class="feature-icon">⚛️</div><div class="feature-text"><b>First Physics-Olympiad leaderboard</b> — 13 physics Olympiads from 2024–2025 with <b>official medal cutoffs</b>.</div></div>
-      <div class="feature-row"><div class="feature-icon">🤝</div><div class="feature-text"><b>Direct human-model comparison</b> — HiPhO benchmarks (M)LLM exam scores against <b>human contestants</b>.</div></div>
-      <div class="feature-row"><div class="feature-icon">📚</div><div class="feature-text"><b>Rich difficulty spectrum</b> — PHYSICS spans <b>high school, Olympiad, undergraduate, and graduate levels</b>.</div></div>
-    </div>
-
-    <!-- CTA TILES -->
-    <div class="cta-tiles">
-      <div class="tile" id="btnHiPhO"><h3>HiPhO</h3><div class="sub">Physics Olympiad</div></div>
-      <div class="tile" id="btnPHYSICS"><h3>PHYSICS</h3><div class="sub">Mixed Difficulty</div></div>
-    </div>
-
+    <div class="wrap">
     <!-- Tabs -->
     <div id="leaderboard" class="tabs">
       <div class="tab active" id="tab-hipho">HiPhO</div>
