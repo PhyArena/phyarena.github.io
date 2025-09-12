@@ -417,8 +417,8 @@
       linkPhysPaper.href = LINKS.physics.paper;
     }
 
-    // ===== Constants and state
-    const CANONICAL_COLS = [
+    // ---------- HiPhO (Olympiads) ----------
+    const HIPHO_CANONICAL_COLS = [
       {n:'IPhO',y:2025},{n:'IPhO',y:2024},
       {n:'APhO',y:2025},
       {n:'EuPhO',y:2025},{n:'EuPhO',y:2024},
@@ -427,33 +427,36 @@
       {n:'PanMechanics',y:2025},{n:'PanMechanics',y:2024},
       {n:'F=MA',y:2025},{n:'F=MA',y:2024}
     ];
-    const CAT_LABELS = ['closed-source MLLM','open-source MLLM','open-source LLM'];
+    const HIPHO_CAT_LABELS = ['closed-source MLLM','open-source MLLM','open-source LLM'];
 
-    let hiPho = [];            // raw olympiad entries
-    let categories = {};       // model -> category
-    let ctx = {};              // key -> {thr, scores: Map(model->score), meta}
-    let allModels = [];        // list of model names
+    let hiphoData = [];                 // olympiad entries
+    let hiphoCategories = {};           // model -> category (HiPhO)
+    let hiphoCtx = {};                  // key -> {thr, scores(Map), meta}
+    let hiphoModels = [];               // all model names
 
     const yearSel = () => document.getElementById('yearSel').value;
-    const selectedComps = new Set(); // filled later
-    const selectedCats = new Set(CAT_LABELS); // default all
+    const selectedComps = new Set();    // competitions filter (HiPhO)
+    const selectedHiphoCats = new Set(HIPHO_CAT_LABELS);
 
-    function colKey(n,y){return `${n}-${y}`}
+    // sort (HiPhO)
+    let hiphoSortKey = null; // default medal comparator
+    let hiphoSortDir = 'desc';
 
-    async function loadData(){
-      const res = await fetch('data/hipho.json', {cache:'no-store'});
+    function hiphoColKey(n,y){ return `${n}-${y}`; }
+
+    async function loadHiphoData(){
+      const res = await fetch('data/hipho.json',{cache:'no-store'});
       const json = await res.json();
-      hiPho = json.olympiads || [];
-      categories = json.model_categories || {};
+      hiphoData = json.olympiads || [];
+      hiphoCategories = json.model_categories || {};
 
-      // Build ctx map and model list
-      const modelSet = new Set(Object.keys(categories));
-      ctx = {};
-      for(const o of hiPho){
-        const key = colKey(o.name,o.year);
+      const modelSet = new Set(Object.keys(hiphoCategories));
+      hiphoCtx = {};
+      for(const o of hiphoData){
+        const key = hiphoColKey(o.name,o.year);
         const map = new Map();
         for(const m of o.models){ map.set(m.name, m.score); modelSet.add(m.name); }
-        ctx[key] = {
+        hiphoCtx[key] = {
           thr:o.thresholds,
           scores:map,
           meta:{
@@ -464,18 +467,18 @@
           }
         };
       }
-      allModels = Array.from(modelSet);
+      hiphoModels = Array.from(modelSet);
     }
 
-    function humanCols(){
+    function hiphoHumanCols(){
       const y = yearSel();
-      return CANONICAL_COLS.filter(c => (y==='all' || String(c.y)===y) && (selectedComps.size===0 || selectedComps.has(c.n)));
+      return HIPHO_CANONICAL_COLS.filter(c => (y==='all' || String(c.y)===y) && (selectedComps.size===0 || selectedComps.has(c.n)));
     }
 
-    function computeMedalsForModel(model){
-      let g=0,s=0,b=0; const cols = humanCols();
+    function hiphoComputeMedals(model){
+      let g=0,s=0,b=0; const cols = hiphoHumanCols();
       for(const c of cols){
-        const key = colKey(c.n,c.y), box = ctx[key]; if(!box) continue;
+        const key = hiphoColKey(c.n,c.y), box = hiphoCtx[key]; if(!box) continue;
         const sc = box.scores.get(model);
         if(sc==null) continue;
         const {gold, silver, bronze} = box.thr;
@@ -484,9 +487,8 @@
       return {g,s,b};
     }
 
-    function catClass(name){
-      const c = categories[name];
-      // HiPhO categories
+    function catClassHipho(name){
+      const c = hiphoCategories[name];
       if(c==='closed-source MLLM') return 'cat-blue';
       if(c==='open-source MLLM') return 'cat-green';
       if(c==='open-source LLM') return 'cat-purple';
@@ -500,7 +502,7 @@
 
     function buildCompPills(){
       const holder = document.getElementById('compPills');
-      const comps = Array.from(new Set(CANONICAL_COLS.map(c=>c.n)));
+      const comps = Array.from(new Set(HIPHO_CANONICAL_COLS.map(c=>c.n)));
       holder.innerHTML = '';
       for(const n of comps){
         const el = document.createElement('button');
@@ -510,7 +512,7 @@
         el.addEventListener('click', ()=>{
           if(selectedComps.has(n)){ selectedComps.delete(n); el.classList.remove('active'); }
           else { selectedComps.add(n); el.classList.add('active'); }
-          render();
+          hiphoRender();
         });
         holder.appendChild(el);
       }
@@ -519,80 +521,71 @@
     function buildCatPills(){
       const holder = document.getElementById('catPills');
       holder.innerHTML = '';
-      for(const label of CAT_LABELS){
+      for(const label of HIPHO_CAT_LABELS){
         const el = document.createElement('button');
         el.className = 'pill active';
-        el.textContent = label.replace('-','-');
+        el.textContent = label;
         el.addEventListener('click', ()=>{
-          if(selectedCats.has(label)){ selectedCats.delete(label); el.classList.remove('active'); }
-          else { selectedCats.add(label); el.classList.add('active'); }
-          render();
+          if(selectedHiphoCats.has(label)){ selectedHiphoCats.delete(label); el.classList.remove('active'); }
+          else { selectedHiphoCats.add(label); el.classList.add('active'); }
+          hiphoRender();
         });
         holder.appendChild(el);
       }
     }
 
     // ===== Sorting
-    let sortKey = null; // null => default medal sort
-    let sortDir = 'desc';
-
-    function attachSortHandlers(){
-      document.getElementById('thead').addEventListener('click', (e)=>{
-        const th = e.target.closest('th.th-sort');
-        if(!th) return;
+    function hiphoAttachSortHandlers(){
+      document.getElementById('thead').addEventListener('click',(e)=>{
+        const th = e.target.closest('th.th-sort'); if(!th) return;
         const key = th.dataset.key;
-        if(sortKey === key){ sortDir = (sortDir==='desc'?'asc':'desc'); }
-        else { sortKey = key; sortDir = (key==='model'?'asc':'desc'); }
-        render();
+        if(hiphoSortKey === key){ hiphoSortDir = (hiphoSortDir==='desc'?'asc':'desc'); }
+        else { hiphoSortKey = key; hiphoSortDir = (key==='model'?'asc':'desc'); }
+        hiphoRender();
       });
     }
-
-    function defaultComparator(a,b){
+    
+    function hiphoDefaultComparator(a,b){
       if(b.g!==a.g) return b.g-a.g;
       if(b.s!==a.s) return b.s-a.s;
       if(b.b!==a.b) return b.b-a.b;
-      const ka = a.scores[colKey('IPhO',2025)] ?? -Infinity;
-      const kb = b.scores[colKey('IPhO',2025)] ?? -Infinity;
+      const ka = a.scores[hiphoColKey('IPhO',2025)] ?? -Infinity;
+      const kb = b.scores[hiphoColKey('IPhO',2025)] ?? -Infinity;
       if(kb!==ka) return kb-ka;
       return a.model.localeCompare(b.model);
     }
 
-    function valueComparator(a,b,key){
+    function hiphoValueComparator(a,b,key){
       const va = key==='gold'?a.g:key==='silver'?a.s:key==='bronze'?a.b:key==='model'?a.model:b.scores[key];
       const vb = key==='gold'?b.g:key==='silver'?b.s:key==='bronze'?b.b:key==='model'?b.model:a.scores[key];
-      if(key==='model') return sortDir==='asc'?String(va).localeCompare(String(vb)):String(vb).localeCompare(String(va));
+      if(key==='model') return hiphoSortDir==='asc'?String(va).localeCompare(String(vb)):String(vb).localeCompare(String(va));
       const A = (typeof va==='number')?va:-Infinity;
       const B = (typeof vb==='number')?vb:-Infinity;
-      return (sortDir==='asc'?(A-B):(B-A));
+      return (hiphoSortDir==='asc'?(A-B):(B-A));
     }
 
     // header with 7 meta rows
-    function header(cols){
-      const make = (label, key, align = 'center') =>
-        `<th class="th-sort ${sortKey === key ? sortDir : ''} ${align === 'left' ? 'left' : 'center'}" data-key="${key}">
-          <div class="th-inner">
-            ${label}<span class="arrow">▾</span>
-          </div>
+    function hiphoHeader(cols){
+      const make = (label, key, align='center') =>
+        `<th class="th-sort ${hiphoSortKey === key ? hiphoSortDir : ''} ${align==='left'?'left':'center'}" data-key="${key}">
+          <div class="th-inner">${label}<span class="arrow">▾</span></div>
         </th>`;
       let html = '<tr>' + make('Model','model','left') + make('🥇','gold') + make('🥈','silver') + make('🥉','bronze');
-      for (const c of cols){ html += make(`${c.n}<br>${c.y}`, `${c.n}-${c.y}`); }
+      for(const c of cols){ html += make(`${c.n}<br>${c.y}`, hiphoColKey(c.n,c.y)); }
       html += '</tr>';
 
       const rows = [
         {key:'full_human', name:'Full Mark (Human)', cls:''}, 
         {key:'full_model', name:'Full Mark (Model)', cls:''}, 
-        // {key:'top1_human', name:'Top-1 Score (Human)', cls:''}, 
-        // {key:'top1_model', name:'Top-1 Score (Model)', cls:''},
         {key:'gold',  name:'🥇 Gold Cutoff',   cls:'med-gold',   type:'thr'},
         {key:'silver',name:'🥈 Silver Cutoff', cls:'med-silver', type:'thr'},
         {key:'bronze',name:'🥉 Bronze Cutoff', cls:'med-bronze', type:'thr'}
       ];
       for (const r of rows){
-        html += `<tr class="metahead">` +
-                `<th class="left">${r.name}</th>` +
-                `<th class="center">—</th><th class="center">—</th><th class="center">—</th>`;
+        html += `<tr class="metahead"><th class="left">${r.name}</th>
+                <th class="center">—</th><th class="center">—</th><th class="center">—</th>`;
         for (const c of cols){
-          const box = ctx[`${c.n}-${c.y}`];
+          const box = hiphoCtx[hiphoColKey(c.n,c.y)];
           const val = r.type==='thr' ? box?.thr?.[r.key] : box?.meta?.[r.key];
           html += `<th class="center ${r.cls}">${val==null?'—':Number(val).toFixed(1)}</th>`;
         }
@@ -602,8 +595,8 @@
     }
 
     // stack sticky header rows (key fix!)
-    function stackStickyHeader(){
-      const thead = document.getElementById('thead');
+    function stackStickyHeaderById(theadId){
+      const thead = document.getElementById(theadId);
       const rows = Array.from(thead.querySelectorAll('tr'));
       let top = 0;
       for(const r of rows){
@@ -611,39 +604,40 @@
         for(const th of r.children){
           th.style.position = 'sticky';
           th.style.top = top + 'px';
-          th.style.zIndex = 5; // above body cells
+          th.style.zIndex = 5;
         }
-        // ensure the first sticky-left header cell is above others
         const first = r.children[0];
         if(first){ first.style.zIndex = 6; }
         top += h;
       }
     }
 
+
     // models
-    function modelRows(cols){
+    function hiphoModelRows(cols){
       const q = document.getElementById('modelSearch').value.trim().toLowerCase();
       const data = [];
-      for(const m of allModels){
+      for(const m of hiphoModels){
         if(q && !m.toLowerCase().includes(q)) continue;
-        const cat = categories[m];
-        if(selectedCats.size>0 && !selectedCats.has(cat)) continue;
-        const {g,s,b} = computeMedalsForModel(m);
+        const cat = hiphoCategories[m];
+        if(selectedHiphoCats.size>0 && !selectedHiphoCats.has(cat)) continue;
+        const {g,s,b} = hiphoComputeMedals(m);
         const record = {model:m,g,s,b,scores:{}};
         for(const c of cols){
-          const key = colKey(c.n,c.y); const box = ctx[key];
+          const key = hiphoColKey(c.n,c.y); const box = hiphoCtx[key];
           record.scores[key] = box?.scores.get(m);
         }
         data.push(record);
       }
-      if(!sortKey) data.sort(defaultComparator); else data.sort((a,b)=>valueComparator(a,b,sortKey));
+      if(!hiphoSortKey) data.sort(hiphoDefaultComparator);
+      else data.sort((a,b)=>hiphoValueComparator(a,b,hiphoSortKey));
 
       const tb = [];
       for(const r of data){
-        let tr = `<tr><td class="left"><span class="chip ${catClass(r.model)}">${r.model}</span></td>`+
-                 `<td class="center">${r.g}</td><td class="center">${r.s}</td><td class="center">${r.b}</td>`;
+        let tr = `<tr><td class="left"><span class="chip ${catClassHipho(r.model)}">${r.model}</span></td>`+
+                `<td class="center">${r.g}</td><td class="center">${r.s}</td><td class="center">${r.b}</td>`;
         for(const c of cols){
-          const key = colKey(c.n,c.y); const box = ctx[key]; const val = r.scores[key];
+          const key = hiphoColKey(c.n,c.y); const box = hiphoCtx[key]; const val = r.scores[key];
           const cls = (val==null)?'':(val>=box.thr.gold?'med-gold':val>=box.thr.silver?'med-silver':val>=box.thr.bronze?'med-bronze':'');
           tr += `<td class="center ${cls}">${val==null?'—':val.toFixed(1)}</td>`;
         }
@@ -653,19 +647,220 @@
       return tb.join('');
     }
 
-    function render(){
-      const cols = humanCols();
-      header(cols);
-      document.getElementById('tbody').innerHTML = modelRows(cols);
-      // 关键：渲染完 header 后叠加 sticky 偏移
-      stackStickyHeader();
+    function hiphoRender(){
+      const cols = hiphoHumanCols();
+      hiphoHeader(cols);
+      document.getElementById('tbody').innerHTML = hiphoModelRows(cols);
+      stackStickyHeaderById('thead');
     }
 
-    function attachFilters(){
-      document.getElementById('yearSel').addEventListener('change', render);
-      document.getElementById('modelSearch').addEventListener('input', render);
+    function hiphoAttachFilters(){
+      document.getElementById('yearSel').addEventListener('change', hiphoRender);
+      document.getElementById('modelSearch').addEventListener('input', hiphoRender);
     }
 
+    
+    // ---------- PHYSICS (Accuracy/Subject/Difficulty/Language) ----------
+    const PHYSICS_DOMAINS = {
+      'Accuracy': ['Hybrid Acc','Rule Acc'],
+      'Subject': ['Mech.','Electromag.','Thermo.','Optics','Mod.'],
+      'Difficulty Level': ['1','2','3','4'],
+      'Language': ['EN','ZH']
+    };
+    // required default order:
+    const PHYSICS_COLS_ORDER = ['Hybrid Acc','Rule Acc','Mech.','Electromag.','Thermo.','Optics','Mod.','1','2','3','4','EN','ZH'];
+
+    const PHYSICS_CAT_LABELS = [
+      'closed-source reasoning model',
+      'closed-source chat model',
+      'open-source reasoning model',
+      'open-source chat model'
+    ];
+
+    let physMetrics = {};                 // metrics[domain][sub][model] = value
+    let physCategories = {};              // model -> one of 4 types
+    let physModels = [];                  // all model names
+    let physSelectedDomain = 'all';
+    let physSelectedSubs = new Set(PHYSICS_COLS_ORDER);
+    let physSelectedCats = new Set(PHYSICS_CAT_LABELS);
+
+    // sort (PHYSICS) – default by Hybrid Acc desc
+    let physSortKey = 'Accuracy|Hybrid Acc';
+    let physSortDir = 'desc';
+
+    async function loadPhysicsData(){
+      const res = await fetch('data/physics.json',{cache:'no-store'});
+      const json = await res.json();
+      physMetrics = json.metrics || {};
+      physCategories = json.model_categories || {};
+
+      const set = new Set();
+      for(const d of Object.keys(physMetrics)){
+        for(const s of Object.keys(physMetrics[d])){
+          for(const m of Object.keys(physMetrics[d][s])) set.add(m);
+        }
+      }
+      physModels = Array.from(set);
+    }
+
+    function catClassPhys(name){
+      const c = physCategories[name];
+      if(c==='closed-source reasoning model') return 'cat-purple';
+      if(c==='open-source reasoning model')   return 'cat-blue';
+      if(c==='closed-source chat model')      return 'cat-green';
+      if(c==='open-source chat model')        return 'cat-yellow';
+      return '';
+    }
+
+    function physGetVal(model, domain, sub){
+      const v = physMetrics?.[domain]?.[sub]?.[model];
+      return (typeof v==='number') ? v : null;
+    }
+
+    function physActiveCols(){
+      if(physSelectedDomain==='all'){
+        return PHYSICS_COLS_ORDER.map(label=>{
+          // map label to domain+sub
+          if(PHYSICS_DOMAINS['Accuracy'].includes(label)) return {domain:'Accuracy', sub:label};
+          if(PHYSICS_DOMAINS['Subject'].includes(label)) return {domain:'Subject', sub:label};
+          if(PHYSICS_DOMAINS['Difficulty Level'].includes(label)) return {domain:'Difficulty Level', sub:label};
+          return {domain:'Language', sub:label};
+        });
+      }
+      // domain-specific
+      const list = PHYSICS_DOMAINS[physSelectedDomain] || [];
+      return list.filter(s=>physSelectedSubs.has(s)).map(s=>({domain:physSelectedDomain, sub:s}));
+    }
+
+    function physHeader(cols){
+      const make = (label, key, align='center') =>
+        `<th class="th-sort ${physSortKey===key ? physSortDir : ''} ${align==='left'?'left':'center'}" data-key="${key}">
+          <div class="th-inner">${label}<span class="arrow">▾</span></div>
+        </th>`;
+      let html = '<tr>'+ make('Model','model','left');
+      for(const c of cols){
+        const short = c.sub; // already short labels
+        html += make(short, `${c.domain}|${c.sub}`);
+      }
+      html += '</tr>';
+      document.getElementById('physicsThead').innerHTML = html;
+    }
+
+    function physValue(model, key){
+      if(key==='model') return model;
+      const [d,s] = key.split('|');
+      return physGetVal(model, d, s);
+    }
+
+    function physComparator(a,b,key){
+      if(key==='model'){
+        return physSortDir==='asc' ? a.localeCompare(b) : b.localeCompare(a);
+      }
+      const va = physValue(a,key), vb = physValue(b,key);
+      const A = (typeof va==='number')?va:-Infinity;
+      const B = (typeof vb==='number')?vb:-Infinity;
+      return physSortDir==='asc' ? (A-B) : (B-A);
+    }
+
+    function physModelRows(cols){
+      const q = document.getElementById('physModelSearch').value.trim().toLowerCase();
+      let models = physModels.filter(m=>{
+        if(q && !m.toLowerCase().includes(q)) return false;
+        const cat = physCategories[m];
+        return physSelectedCats.size===0 || physSelectedCats.has(cat);
+      });
+
+      // default sort by Hybrid Acc desc
+      const key = physSortKey || 'Accuracy|Hybrid Acc';
+      models.sort((a,b)=>physComparator(a,b,key));
+
+      const rows = [];
+      for(const m of models){
+        let tr = `<tr><td class="left"><span class="chip ${catClassPhys(m)}">${m}</span></td>`;
+        for(const c of cols){
+          const v = physGetVal(m, c.domain, c.sub);
+          tr += `<td class="center">${v==null?'—':v.toFixed(1)}</td>`;
+        }
+        tr += '</tr>';
+        rows.push(tr);
+      }
+      return rows.join('');
+    }
+
+    function physRender(){
+      const cols = physActiveCols();
+      physHeader(cols);
+      document.getElementById('physicsTbody').innerHTML = physModelRows(cols);
+      stackStickyHeaderById('physicsThead');
+    }
+
+    function physBuildCatPills(){
+      const holder = document.getElementById('physCatPills');
+      holder.innerHTML = '';
+      for(const label of PHYSICS_CAT_LABELS){
+        const el = document.createElement('button');
+        el.className = 'pill active';
+        el.textContent = label;
+        el.addEventListener('click', ()=>{
+          if(physSelectedCats.has(label)){ physSelectedCats.delete(label); el.classList.remove('active'); }
+          else { physSelectedCats.add(label); el.classList.add('active'); }
+          physRender();
+        });
+        holder.appendChild(el);
+      }
+    }
+
+    function physBuildSubcatPills(){
+      const holder = document.getElementById('subcatPills');
+      holder.innerHTML = '';
+
+      // decide what to show
+      let subs = [];
+      if(physSelectedDomain==='all'){
+        // show all as quick toggles
+        subs = PHYSICS_COLS_ORDER.slice();
+      }else{
+        subs = (PHYSICS_DOMAINS[physSelectedDomain] || []).slice();
+      }
+
+      // ensure default all selected when switching domain
+      physSelectedSubs = new Set(subs.length ? subs : PHYSICS_COLS_ORDER);
+
+      for(const s of subs){
+        const el = document.createElement('button');
+        el.className = 'pill active';
+        el.textContent = s;
+        el.addEventListener('click', ()=>{
+          if(physSelectedSubs.has(s)){ physSelectedSubs.delete(s); el.classList.remove('active'); }
+          else { physSelectedSubs.add(s); el.classList.add('active'); }
+          physRender();
+        });
+        holder.appendChild(el);
+      }
+    }
+
+    function physAttachSortHandlers(){
+      document.getElementById('physicsThead').addEventListener('click',(e)=>{
+        const th = e.target.closest('th.th-sort'); if(!th) return;
+        const key = th.dataset.key;
+        if(physSortKey === key){ physSortDir = (physSortDir==='desc'?'asc':'desc'); }
+        else { physSortKey = key; physSortDir = (key==='model'?'asc':'desc'); }
+        physRender();
+      });
+    }
+
+    function physAttachFilters(){
+      document.getElementById('domainSel').addEventListener('change', (e)=>{
+        physSelectedDomain = e.target.value;
+        physBuildSubcatPills();
+        // rebuild sort default when switching to Accuracy domain
+        if(physSelectedDomain==='Accuracy') { physSortKey = 'Accuracy|Hybrid Acc'; physSortDir='desc'; }
+        physRender();
+      });
+      document.getElementById('physModelSearch').addEventListener('input', physRender);
+    }
+
+    // ===== Tiles =====
     function setupTiles(){
       document.getElementById('btnHiPhO').addEventListener('click',()=>{
         document.getElementById('tab-hipho').click();
@@ -677,7 +872,7 @@
       });
     }
 
-    // Tabs
+    // ===== Tabs =====
     document.getElementById('tab-hipho').addEventListener('click',()=>{
       document.getElementById('tab-hipho').classList.add('active');
       document.getElementById('tab-physics').classList.remove('active');
@@ -691,16 +886,27 @@
       document.getElementById('panel-hipho').style.display='none';
     });
 
-    // ===== Init
+    // ===== Init =====
     (async function init(){
       wireLinks();
-      await loadData();
+
+      // HiPhO
+      await loadHiphoData();
       buildCompPills();
       buildCatPills();
-      attachFilters();
-      attachSortHandlers();
+      hiphoAttachFilters();
+      hiphoAttachSortHandlers();
+      hiphoRender();
+
+      // PHYSICS
+      await loadPhysicsData();
+      physBuildCatPills();
+      physBuildSubcatPills(); // based on default domain "all"
+      physAttachFilters();
+      physAttachSortHandlers();
+      physRender();
+
       setupTiles();
-      render();
     })();
   </script>
 </body>
