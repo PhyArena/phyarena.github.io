@@ -709,12 +709,16 @@
       const res = await fetch('data/physics.json',{cache:'no-store'});
       const json = await res.json();
       physMetrics = json.metrics || {};
+      // ← 修正键名：Difficult Level -> Difficulty Level
+      if (physMetrics['Difficult Level'] && !physMetrics['Difficulty Level']) {
+        physMetrics['Difficulty Level'] = physMetrics['Difficult Level'];
+      }
       physCategories = json.model_categories || {};
 
       const set = new Set();
-      for(const d of Object.keys(physMetrics)){
-        for(const s of Object.keys(physMetrics[d])){
-          for(const m of Object.keys(physMetrics[d][s])) set.add(m);
+      for (const d of Object.keys(physMetrics)){
+        for (const s of Object.keys(physMetrics[d]||{})){
+          for (const m of Object.keys(physMetrics[d][s]||{})) set.add(m);
         }
       }
       physModels = Array.from(set);
@@ -888,14 +892,18 @@
       });
     }
 
+    // 兼容 value="Difficulty" / "Difficult Level"
+    function normalizeDomain(d){
+      if (d === 'Difficulty' || d === 'Difficult Level') return 'Difficulty Level';
+      return d;
+    }
+
     function physAttachFilters(){
       document.getElementById('domainSel').addEventListener('change',(e)=>{
-        physSelectedDomain = e.target.value;
+        physSelectedDomain = normalizeDomain(e.target.value);   // <— 用规范化
         physBuildSubcatPills();
 
-        if (physSelectedDomain === 'Accuracy'){
-          physSortKey = 'Accuracy|Hybrid Acc'; physSortDir = 'desc';
-        } else if (physSelectedDomain === 'all'){
+        if (physSelectedDomain === 'Accuracy' || physSelectedDomain === 'all'){
           physSortKey = 'Accuracy|Hybrid Acc'; physSortDir = 'desc';
         } else {
           const first = (PHYSICS_DOMAINS[physSelectedDomain]||[])[0];
