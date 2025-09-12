@@ -240,11 +240,13 @@
           <tbody id="tbody"></tbody>
         </table>
       </div>
-      <div class="muted" style="margin-top:8px; line-height:1.6">
-        1. Cells are colored by medal thresholds. By default, models are sorted by Gold ↓, then Silver ↓, Bronze ↓; ties are broken by IPhO 2025 score ↓.<br>
-        2. We evaluate only the theoretical parts of the exams. Medal cutoffs are based on the theoretical scores of human medalists.<br>
-        3. Each model was run 8 times. We averaged problem scores and summed them for the final exam score.
+      <div class="muted" style="margin-top:8px; line-height:1.6"> 
+        1. Cells are color-coded based on official medal thresholds. Models are ranked by Gold ↓, then Silver ↓, then Bronze ↓, with ties broken by IPhO 2025 score ↓.<br>
+        2. Medal cutoffs are derived from the theoretical exam scores of human medalists.<br>
+        3. Only the theoretical components of each exam are evaluated; experimental and diagram-drawing problems are excluded, so Full Mark (Model) ≤ Full Mark (Human).<br>
+        4. Each model was run 8 times. Problem scores were averaged and summed to compute the final exam score.
       </div>
+
 
     </section>
 
@@ -455,8 +457,8 @@
       html += '</tr>';
 
       const rows = [
-        // {key:'full_human', name:'Full Mark (Human)', cls:''}, 
-        // {key:'full_model', name:'Full Mark (Model)', cls:''}, 
+        {key:'full_human', name:'Full Mark (Human)', cls:''}, 
+        {key:'full_model', name:'Full Mark (Model)', cls:''}, 
         // {key:'top1_human', name:'Top-1 Score (Human)', cls:''}, 
         // {key:'top1_model', name:'Top-1 Score (Model)', cls:''},
         {key:'gold',  name:'🥇 Gold Cutoff',   cls:'med-gold',   type:'thr'},
