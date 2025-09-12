@@ -186,10 +186,26 @@
     }
     /* th:first-child, td:first-child{position:sticky;left:0;background:#fff;z-index:2} */
     /* thead th:first-child{z-index:4} */
-    /* 用类名标记真正需要粘住的“Model列” */
-    .sticky-left{position:sticky;left:0;background:#fff;z-index:2}
-    /* 表头需要更高层级避免被覆盖 */
-    thead .sticky-left{z-index:7}
+    /* 先移除旧的：th:first-child, td:first-child { position: sticky; ... } 规则 */
+
+    /* 仅用于显式标记“需要固定在最左侧”的单元格（表头里的 Model） */
+    .sticky-left{position:sticky;left:0;background:#fff}
+    .table-wrap thead .sticky-left{z-index:9} /* 表头层级更高，避免被覆盖 */
+
+    /* 表体第一列（Model 值）固定在最左侧 */
+    .table-wrap tbody td:first-child{
+      position: sticky;
+      left: 0;
+      background: #fff;
+      z-index: 2;   /* 低于表头，避免覆盖表头 */
+    }
+
+    /* 避免把表头第二行的“第一个 th”（通常是 Hybrid Acc）也固定到最左 */
+    .table-wrap thead tr:not(:first-child) > th:first-child{
+      position: static !important;
+      left: auto !important;
+      z-index: auto !important;
+    }
 
 
     /* model chips */
@@ -576,7 +592,7 @@
           <div class="th-inner">${label}<span class="arrow">▾</span></div>
         </th>`;
 
-      // 行1：Model（固定左侧）+ 奖牌 + 各竞赛列
+      // 行1：Model（固定左侧，仅这一格 sticky-left）+ 奖牌 + 各竞赛列
       let html = '<tr>'
         + `<th class="th-sort ${hiphoSortKey==='model'?hiphoSortDir:''} left sticky-left" data-key="model">
             <div class="th-inner">Model<span class="arrow">▾</span></div>
@@ -587,7 +603,7 @@
       }
       html += '</tr>';
 
-      // 行2+：Full Mark / Cutoffs
+      // 行2+：Full Mark / Cutoffs（注意：这里不再粘左，以避免横向滚动时的层级冲突）
       const rows = [
         {key:'full_human', name:'Full Mark (Human)', cls:''},
         {key:'full_model', name:'Full Mark (Model)', cls:''},
@@ -597,7 +613,7 @@
       ];
       for (const r of rows){
         html += `<tr class="metahead">
-                  <th class="left sticky-left">${r.name}</th>
+                  <th class="left">${r.name}</th>
                   <th class="center">—</th><th class="center">—</th><th class="center">—</th>`;
         for (const c of cols){
           const box = hiphoCtx[hiphoColKey(c.n,c.y)];
@@ -606,6 +622,7 @@
         }
         html += `</tr>`;
       }
+
       document.getElementById('thead').innerHTML = html;
     }
 
@@ -757,7 +774,7 @@
     }
 
     function physHeader(cols){
-      // 统计大类的列跨度
+      // 大类分组及跨度
       const groups = [];
       for (const c of cols){
         const last = groups[groups.length-1];
@@ -775,7 +792,7 @@
       }
       html += '</tr>';
 
-      // 第二行：小类列（可排序）
+      // 第二行：小类列（可排序；不粘左）
       html += '<tr>';
       for (const c of cols){
         const key = `${c.domain}|${c.sub}`;
@@ -787,7 +804,6 @@
 
       document.getElementById('physicsThead').innerHTML = html;
     }
-
 
     function physValue(model, key){
       if(key==='model') return model;
