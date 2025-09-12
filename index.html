@@ -859,16 +859,26 @@
       const holder = document.getElementById('subcatPills');
       holder.innerHTML = '';
 
-      const subs = (physSelectedDomain==='all')
-        ? PHYSICS_COLS_ORDER.slice()
-        : (PHYSICS_DOMAINS[physSelectedDomain] || []).slice();
+      let subs = [];
+      if (physSelectedDomain === 'all') {
+        // ✅ 在 All 模式下，始终默认显示“全部列”
+        subs = PHYSICS_COLS_ORDER.slice();
+        physSelectedSubs = new Set(subs);            // ← 关键：重置为全选
+      } else {
+        subs = (PHYSICS_DOMAINS[physSelectedDomain] || []).slice();
 
-      // 域切换时，若当前选择越界或为空，重置为该域的全部
-      const scope = new Set(subs);
-      if (![...physSelectedSubs].every(s=>scope.has(s)) || physSelectedSubs.size===0){
-        physSelectedSubs = new Set(subs);
+        // 当前选择如果不属于该域或为空，则重置为该域的全部；
+        // 否则把选择裁剪到该域范围内（避免残留上一个域的列名）。
+        const scope = new Set(subs);
+        if (physSelectedSubs.size === 0 ||
+            ![...physSelectedSubs].every(s => scope.has(s))) {
+          physSelectedSubs = new Set(subs);
+        } else {
+          physSelectedSubs = new Set([...physSelectedSubs].filter(s => scope.has(s)));
+        }
       }
 
+      // 渲染 pills（根据是否在选中集合里设置 active）
       for (const s of subs){
         const el = document.createElement('button');
         el.className = 'pill ' + (physSelectedSubs.has(s) ? 'active' : '');
