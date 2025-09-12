@@ -332,7 +332,7 @@
             <option value="all">All</option>
             <option value="Accuracy">Accuracy</option>
             <option value="Subject">Subject</option>
-            <option value="Difficulty">Difficulty Level</option>
+            <option value="Difficulty Level">Difficulty Level</option>
             <option value="Language">Language</option>
           </select>
         </div>
@@ -713,51 +713,55 @@
     }
 
     function physActiveCols(){
-      if(physSelectedDomain==='all'){
-        return PHYSICS_COLS_ORDER.map(label=>{
-          // map label to domain+sub
-          if(PHYSICS_DOMAINS['Accuracy'].includes(label)) return {domain:'Accuracy', sub:label};
-          if(PHYSICS_DOMAINS['Subject'].includes(label)) return {domain:'Subject', sub:label};
-          if(PHYSICS_DOMAINS['Difficulty Level'].includes(label)) return {domain:'Difficulty Level', sub:label};
-          return {domain:'Language', sub:label};
-        });
+      if (physSelectedDomain === 'all'){
+        const groups = [
+          { title: 'Accuracy',         subs: ['Hybrid Acc.', 'Rule Acc.'] },
+          { title: 'Subject',          subs: ['Mod.', 'Mech.', 'Electromag.', 'Thermo.', 'Optics'] },
+          { title: 'Difficulty Level', subs: ['1','2','3','4'] },
+          { title: 'Language',         subs: ['EN','ZH'] }
+        ];
+        // 展平为 [{domain, sub}, ...]，顺序与两行表头一致
+        return groups.flatMap(g => g.subs.map(s => ({ domain: g.title, sub: s })));
       }
-      // domain-specific
+      // 非 all：保留你原来的子类选择逻辑
       const list = PHYSICS_DOMAINS[physSelectedDomain] || [];
-      return list.filter(s=>physSelectedSubs.has(s)).map(s=>({domain:physSelectedDomain, sub:s}));
+      return list
+        .filter(s => physSelectedSubs.has(s))
+        .map(s => ({ domain: physSelectedDomain, sub: s }));
     }
 
     function physHeader(cols){
-      // Define top-level groups
+      // 两层表头分组（顺序与截图一致）
       const groups = [
-        { title: 'Accuracy', subs: ['Hybrid Acc', 'Rule Acc'] },
-        { title: 'Subject', subs: ['Mod.', 'Mech.', 'Electromag.', 'Thermo.', 'Optics'] },
+        { title: 'Accuracy',         subs: ['Hybrid Acc.', 'Rule Acc.'] },
+        { title: 'Subject',          subs: ['Mod.', 'Mech.', 'Electromag.', 'Thermo.', 'Optics'] },
         { title: 'Difficulty Level', subs: ['1','2','3','4'] },
-        { title: 'Language', subs: ['EN','ZH'] }
+        { title: 'Language',         subs: ['EN','ZH'] }
       ];
 
-      // First header row (colspan)
+      // 第一行（分组标题，colspan）
       let html = '<tr><th rowspan="2" class="left">Model</th>';
-      for(const g of groups){
+      for (const g of groups){
         html += `<th colspan="${g.subs.length}" class="center">${g.title}</th>`;
       }
       html += '</tr>';
 
-      // Second header row (actual clickable columns)
+      // 第二行（可点击排序的具体列）
       html += '<tr>';
-      for(const g of groups){
-        for(const sub of g.subs){
+      for (const g of groups){
+        for (const sub of g.subs){
           const key = `${g.title}|${sub}`;
-          const sortCls = (physSortKey===key ? physSortDir : '');
+          const sortCls = (physSortKey === key ? physSortDir : '');
           html += `<th class="th-sort ${sortCls} center" data-key="${key}">
-                    <div class="th-inner">${sub}<span class="arrow">▾</span></div>
-                  </th>`;
+            <div class="th-inner">${sub}<span class="arrow">▾</span></div>
+          </th>`;
         }
       }
       html += '</tr>';
 
       document.getElementById('physicsThead').innerHTML = html;
     }
+
 
     function physValue(model, key){
       if(key==='model') return model;
