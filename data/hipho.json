@@ -356,13 +356,13 @@
         { "name": "Phi-4-multimodal", "score": 8.3 },
         { "name": "DeepSeek-VL2", "score": 5.6 },
         { "name": "GPT-OSS-120B", "score": 37.4 },
-        { "name": "DeepSeek-R1", "score": 22.4 },
-        { "name": "Qwen3-235B-A22B", "score": 26.0 },
+        { "name": "DeepSeek-R1", "score": 42.2 },
+        { "name": "Qwen3-235B-A22B", "score": 42.3 },
         { "name": "Kimi-K2-Instruct", "score": 35.9 },
-        { "name": "Qwen3-32B", "score": 26.8 },
-        { "name": "Qwen3-30B-A3B", "score": 22.8 },
-        { "name": "DeepSeek-V3", "score": 23.5 },
-        { "name": "Qwen3-8B", "score": 21.2 }
+        { "name": "Qwen3-32B", "score": 36.6 },
+        { "name": "Qwen3-30B-A3B", "score": 31.9 },
+        { "name": "DeepSeek-V3", "score": 37.2 },
+        { "name": "Qwen3-8B", "score": 26.3 }
       ]
     },
     {
@@ -397,13 +397,13 @@
         { "name": "Phi-4-multimodal", "score": 9.0 },
         { "name": "DeepSeek-VL2", "score": 4.8 },
         { "name": "GPT-OSS-120B", "score": 41.8 },
-        { "name": "DeepSeek-R1", "score": 20.3 },
-        { "name": "Qwen3-235B-A22B", "score": 18.9 },
+        { "name": "DeepSeek-R1", "score": 47.4 },
+        { "name": "Qwen3-235B-A22B", "score": 49.1 },
         { "name": "Kimi-K2-Instruct", "score": 41.8 },
-        { "name": "Qwen3-32B", "score": 17.9 },
-        { "name": "Qwen3-30B-A3B", "score": 17.8 },
-        { "name": "DeepSeek-V3", "score": 16.9 },
-        { "name": "Qwen3-8B", "score": 11.5 }
+        { "name": "Qwen3-32B", "score": 41.8 },
+        { "name": "Qwen3-30B-A3B", "score": 39.5 },
+        { "name": "DeepSeek-V3", "score": 35.0 },
+        { "name": "Qwen3-8B", "score": 22.3 }
       ]
     },
     {
@@ -438,13 +438,13 @@
         { "name": "Phi-4-multimodal", "score": 10.0 },
         { "name": "DeepSeek-VL2", "score": 7.3 },
         { "name": "GPT-OSS-120B", "score": 57.1 },
-        { "name": "DeepSeek-R1", "score": 48.5 },
-        { "name": "Qwen3-235B-A22B", "score": 48.9 },
+        { "name": "DeepSeek-R1", "score": 65.4 },
+        { "name": "Qwen3-235B-A22B", "score": 63.1 },
         { "name": "Kimi-K2-Instruct", "score": 65.9 },
-        { "name": "Qwen3-32B", "score": 50.1 },
-        { "name": "Qwen3-30B-A3B", "score": 40.3 },
-        { "name": "DeepSeek-V3", "score": 36.7 },
-        { "name": "Qwen3-8B", "score": 15.0 }
+        { "name": "Qwen3-32B", "score": 67.0 },
+        { "name": "Qwen3-30B-A3B", "score": 49.9 },
+        { "name": "DeepSeek-V3", "score": 48.4 },
+        { "name": "Qwen3-8B", "score": 21.8 }
       ]
     },
     {
@@ -479,13 +479,13 @@
         { "name": "Phi-4-multimodal", "score": 10.1 },
         { "name": "DeepSeek-VL2", "score": 6.4 },
         { "name": "GPT-OSS-120B", "score": 59.7 },
-        { "name": "DeepSeek-R1", "score": 63.8 },
-        { "name": "Qwen3-235B-A22B", "score": 40.4 },
+        { "name": "DeepSeek-R1", "score": 72.5 },
+        { "name": "Qwen3-235B-A22B", "score": 44.6 },
         { "name": "Kimi-K2-Instruct", "score": 58.9 },
-        { "name": "Qwen3-32B", "score": 58.7 },
-        { "name": "Qwen3-30B-A3B", "score": 44.6 },
-        { "name": "DeepSeek-V3", "score": 44.8 },
-        { "name": "Qwen3-8B", "score": 22.5 }
+        { "name": "Qwen3-32B", "score": 59.2 },
+        { "name": "Qwen3-30B-A3B", "score": 45.0 },
+        { "name": "DeepSeek-V3", "score": 46.5 },
+        { "name": "Qwen3-8B", "score": 22.8 }
       ]
     },
     {
