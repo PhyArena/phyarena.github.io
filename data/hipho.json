@@ -1,6 +1,7 @@
 {
   "meta": { "dataset": "HiPhO", "version": "2025-09-16"},
   "model_categories": {
+    "Gemini-3-Pro": "closed-source MLLM",
     "Gemini-2.5-Pro": "closed-source MLLM",
     "Gemini-2.5-Flash-Thinking": "closed-source MLLM",
     "GPT-5": "closed-source MLLM",
@@ -30,6 +31,8 @@
     "GPT-OSS-120B": "open-source LLM",
     "DeepSeek-R1": "open-source LLM",
     "Qwen3-235B-A22B": "open-source LLM",
+    "DeepSeek-V3.2-Speciale": "open-source LLM",
+    "Kimi-K2-Thinking": "open-source LLM",
     "Kimi-K2-Instruct": "open-source LLM",
     "Qwen3-32B": "open-source LLM",
     "Qwen3-30B-A3B": "open-source LLM",
@@ -86,7 +89,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 15.6 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 23.2 },
         { "name": "P1-235B-A22B", "score": 21.2 },
-        { "name": "P1-30B-A3B", "score": 18.5 }
+        { "name": "P1-30B-A3B", "score": 18.5 },
+        { "name": "Gemini-3-Pro", "score": 25.2 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 15.9 },
+        { "name": "Kimi-K2-Thinking", "score": 19.1 }
       ]
     },
     {
@@ -132,7 +138,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 19.7 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 25.2 },
         { "name": "P1-235B-A22B", "score": 24.7 },
-        { "name": "P1-30B-A3B", "score": 22.3 }
+        { "name": "P1-30B-A3B", "score": 22.3 },
+        { "name": "Gemini-3-Pro", "score": 25.2 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 22.7 },
+        { "name": "Kimi-K2-Thinking", "score": 22.8 }
       ]
     },
     {
@@ -178,7 +187,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 23.5 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 28.0 },
         { "name": "P1-235B-A22B", "score": 27.4 },
-        { "name": "P1-30B-A3B", "score": 25.4 }
+        { "name": "P1-30B-A3B", "score": 25.4 },
+        { "name": "Gemini-3-Pro", "score": 28.3 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 20.7 },
+        { "name": "Kimi-K2-Thinking", "score": 22.4 }
       ]
     },
     {
@@ -224,7 +236,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 7.4 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 12.4 },
         { "name": "P1-235B-A22B", "score": 10.8 },
-        { "name": "P1-30B-A3B", "score": 7.4 }
+        { "name": "P1-30B-A3B", "score": 7.4 },
+        { "name": "Gemini-3-Pro", "score": 21.0 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 5.8 },
+        { "name": "Kimi-K2-Thinking", "score": 5.2 }
       ]
     },
     {
@@ -270,7 +285,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 16.4 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 23.5 },
         { "name": "P1-235B-A22B", "score": 23.0 },
-        { "name": "P1-30B-A3B", "score": 18.8 }
+        { "name": "P1-30B-A3B", "score": 18.8 },
+        { "name": "Gemini-3-Pro", "score": 23.9 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 20.9 },
+        { "name": "Kimi-K2-Thinking", "score": 20.9 }
       ]
     },
     {
@@ -316,7 +334,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 28.6 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 31.9 },
         { "name": "P1-235B-A22B", "score": 31.8 },
-        { "name": "P1-30B-A3B", "score": 29.2 }
+        { "name": "P1-30B-A3B", "score": 29.2 },
+        { "name": "Gemini-3-Pro", "score": 37.1 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 27.0 },
+        { "name": "Kimi-K2-Thinking", "score": 26.0 }
       ]
     },
     {
@@ -362,7 +383,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 22.2 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 35.4 },
         { "name": "P1-235B-A22B", "score": 28.4 },
-        { "name": "P1-30B-A3B", "score": 24.0 }
+        { "name": "P1-30B-A3B", "score": 24.0 },
+        { "name": "Gemini-3-Pro", "score": 43.8 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 27.0 },
+        { "name": "Kimi-K2-Thinking", "score": 20.6 }
       ]
     },
     {
@@ -408,7 +432,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 40.5 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 57.7 },
         { "name": "P1-235B-A22B", "score": 54.7 },
-        { "name": "P1-30B-A3B", "score": 47.0 }
+        { "name": "P1-30B-A3B", "score": 47.0 },
+        { "name": "Gemini-3-Pro", "score": 66.3 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 51.8 },
+        { "name": "Kimi-K2-Thinking", "score": 52.5 }
       ]
     },
     {
@@ -454,7 +481,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 43.8 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 67.0 },
         { "name": "P1-235B-A22B", "score": 56.7 },
-        { "name": "P1-30B-A3B", "score": 51.4 }
+        { "name": "P1-30B-A3B", "score": 51.4 },
+        { "name": "Gemini-3-Pro", "score": 76.2 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 48.1 },
+        { "name": "Kimi-K2-Thinking", "score": 51.3 }
       ]
     },
     {
@@ -500,7 +530,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 67.7 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 77.5 },
         { "name": "P1-235B-A22B", "score": 74.7 },
-        { "name": "P1-30B-A3B", "score": 69.5 }
+        { "name": "P1-30B-A3B", "score": 69.5 },
+        { "name": "Gemini-3-Pro", "score": 86.0 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 82.3 },
+        { "name": "Kimi-K2-Thinking", "score": 47.3 }
       ]
     },
     {
@@ -546,7 +579,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 66.5 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 74.8 },
         { "name": "P1-235B-A22B", "score": 72.9 },
-        { "name": "P1-30B-A3B", "score": 69.1 }
+        { "name": "P1-30B-A3B", "score": 69.1 },
+        { "name": "Gemini-3-Pro", "score": 74.8 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 78.0 },
+        { "name": "Kimi-K2-Thinking", "score": 64.8 }
       ]
     },
     {
@@ -592,7 +628,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 18.3 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 21.5 },
         { "name": "P1-235B-A22B", "score": 20.9 },
-        { "name": "P1-30B-A3B", "score": 19.6 }
+        { "name": "P1-30B-A3B", "score": 19.6 },
+        { "name": "Gemini-3-Pro", "score": 23.8 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 20.3 },
+        { "name": "Kimi-K2-Thinking", "score": 20.6 }
       ]
     },
     {
@@ -638,7 +677,10 @@
         { "name": "Qwen3-30B-A3B-Thinking-2507", "score": 18.0 },
         { "name": "P1-235B-A22B + PhysicsMinions", "score": 20.5 },
         { "name": "P1-235B-A22B", "score": 19.4 },
-        { "name": "P1-30B-A3B", "score": 20.0 }
+        { "name": "P1-30B-A3B", "score": 20.0 },
+        { "name": "Gemini-3-Pro", "score": 23.9 },
+        { "name": "DeepSeek-V3.2-Speciale", "score": 19.6 },
+        { "name": "Kimi-K2-Thinking", "score": 19.7 }
       ]
     }
   ]
