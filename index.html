@@ -571,6 +571,10 @@
     function hiphoAttachSortHandlers(){
       document.getElementById('thead').addEventListener('click',(e)=>{
         const th = e.target.closest('th.th-sort'); if(!th) return;
+
+        // ✅ 如果在 meta 行里，直接忽略
+        if (th.closest('tr')?.classList.contains('metahead')) return;
+
         const key = th.dataset.key;
         if(hiphoSortKey === key){ hiphoSortDir = (hiphoSortDir==='desc'?'asc':'desc'); }
         else { hiphoSortKey = key; hiphoSortDir = (key==='model'?'asc':'desc'); }
@@ -641,8 +645,11 @@
 
       for (const r of rows){
         html += `<tr class="metahead">
-                  <th class="left sticky-left">${r.name}</th>
-                  <th class="center">—</th><th class="center">—</th><th class="center">—</th>`;
+                <th class="left sticky-left">${r.name}</th>
+                <th class="center">—</th>
+                <th class="center">—</th>
+                <th class="center">—</th>
+                <th class="center">—</th>`;
         for (const c of cols){
           const box = hiphoCtx[hiphoColKey(c.n,c.y)];
           const val = r.type==='thr' ? box?.thr?.[r.key] : box?.meta?.[r.key];
@@ -697,7 +704,7 @@
       for(const r of data){
         let tr = `<tr>
           <td class="left"><span class="chip ${catClassHipho(r.model)}">${r.model}</span></td>
-          <td class="center">${r.avg==null ? '—' : r.avg.toFixed(2)}</td>
+          <td class="center">${r.avg==null ? '—' : r.avg.toFixed(1)}</td>
           <td class="center">${r.g}</td>
           <td class="center">${r.s}</td>
           <td class="center">${r.b}</td>`;
