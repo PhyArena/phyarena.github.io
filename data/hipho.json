@@ -44,7 +44,10 @@
 
     "P1-235B-A22B + PhysicsMinions": "open-source LLM",
     "P1-235B-A22B": "open-source LLM",
-    "P1-30B-A3B": "open-source LLM"
+    "P1-30B-A3B": "open-source LLM",
+    "P1-VL-235B-A22B + PhysicsMinions": "open-source MLLM",
+    "P1-VL-235B-A22B": "open-source MLLM",
+    "P1-VL-30B-A3B": "open-source MLLM"
   },
   "olympiads": [
     {
@@ -94,7 +97,10 @@
         { "name": "Gemini-3-Pro", "score": 25.2 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 15.9 },
         { "name": "Kimi-K2-Thinking", "score": 19.1 },
-        { "name": "GPT-5.2 (high)", "score": 22.3 }
+        { "name": "GPT-5.2 (high)", "score": 22.3 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 22.1 },
+        { "name": "P1-VL-235B-A22B", "score": 21.0 },
+        { "name": "P1-VL-30B-A3B", "score": 17.9 }
       ]
     },
     {
@@ -144,7 +150,10 @@
         { "name": "Gemini-3-Pro", "score": 25.2 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 22.7 },
         { "name": "Kimi-K2-Thinking", "score": 22.8 },
-        { "name": "GPT-5.2 (high)", "score": 25.5 }
+        { "name": "GPT-5.2 (high)", "score": 25.5 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 25.8 },
+        { "name": "P1-VL-235B-A22B", "score": 25.3 },
+        { "name": "P1-VL-30B-A3B", "score": 22.5 }
       ]
     },
     {
@@ -194,7 +203,10 @@
         { "name": "Gemini-3-Pro", "score": 28.3 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 20.7 },
         { "name": "Kimi-K2-Thinking", "score": 22.4 },
-        { "name": "GPT-5.2 (high)", "score": 28.4 }
+        { "name": "GPT-5.2 (high)", "score": 28.4 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 27.1 },
+        { "name": "P1-VL-235B-A22B", "score": 26.9 },
+        { "name": "P1-VL-30B-A3B", "score": 24.6 }
       ]
     },
     {
@@ -244,7 +256,10 @@
         { "name": "Gemini-3-Pro", "score": 21.0 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 5.8 },
         { "name": "Kimi-K2-Thinking", "score": 5.2 },
-        { "name": "GPT-5.2 (high)", "score": 15.7 }
+        { "name": "GPT-5.2 (high)", "score": 15.7 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 13.7 },
+        { "name": "P1-VL-235B-A22B", "score": 10.7 },
+        { "name": "P1-VL-30B-A3B", "score": 10.6 }
       ]
     },
     {
@@ -294,7 +309,10 @@
         { "name": "Gemini-3-Pro", "score": 23.9 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 20.9 },
         { "name": "Kimi-K2-Thinking", "score": 20.9 },
-        { "name": "GPT-5.2 (high)", "score": 23.9 }
+        { "name": "GPT-5.2 (high)", "score": 23.9 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 22.9 },
+        { "name": "P1-VL-235B-A22B", "score": 21.5 },
+        { "name": "P1-VL-30B-A3B", "score": 19.0 }
       ]
     },
     {
@@ -344,7 +362,10 @@
         { "name": "Gemini-3-Pro", "score": 37.1 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 27.0 },
         { "name": "Kimi-K2-Thinking", "score": 26.0 },
-        { "name": "GPT-5.2 (high)", "score": 35.8 }
+        { "name": "GPT-5.2 (high)", "score": 35.8 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 31.8 },
+        { "name": "P1-VL-235B-A22B", "score": 32.5 },
+        { "name": "P1-VL-30B-A3B", "score": 30.2 }
       ]
     },
     {
@@ -394,7 +415,10 @@
         { "name": "Gemini-3-Pro", "score": 43.8 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 27.0 },
         { "name": "Kimi-K2-Thinking", "score": 20.6 },
-        { "name": "GPT-5.2 (high)", "score": 37.1 }
+        { "name": "GPT-5.2 (high)", "score": 37.1 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 32.6 },
+        { "name": "P1-VL-235B-A22B", "score": 31.9 },
+        { "name": "P1-VL-30B-A3B", "score": 24.6 }
       ]
     },
     {
@@ -444,7 +468,10 @@
         { "name": "Gemini-3-Pro", "score": 66.3 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 51.8 },
         { "name": "Kimi-K2-Thinking", "score": 52.5 },
-        { "name": "GPT-5.2 (high)", "score": 59.8 }
+        { "name": "GPT-5.2 (high)", "score": 59.8 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 66.5 },
+        { "name": "P1-VL-235B-A22B", "score": 61.7 },
+        { "name": "P1-VL-30B-A3B", "score": 50.8 }
       ]
     },
     {
@@ -494,7 +521,10 @@
         { "name": "Gemini-3-Pro", "score": 76.2 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 48.1 },
         { "name": "Kimi-K2-Thinking", "score": 51.3 },
-        { "name": "GPT-5.2 (high)", "score": 82.5 }
+        { "name": "GPT-5.2 (high)", "score": 82.5 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 83.3 },
+        { "name": "P1-VL-235B-A22B", "score": 79.8 },
+        { "name": "P1-VL-30B-A3B", "score": 58.6 }
       ]
     },
     {
@@ -544,7 +574,10 @@
         { "name": "Gemini-3-Pro", "score": 86.0 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 82.3 },
         { "name": "Kimi-K2-Thinking", "score": 47.3 },
-        { "name": "GPT-5.2 (high)", "score": 67.6 }
+        { "name": "GPT-5.2 (high)", "score": 67.6 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 76.0 },
+        { "name": "P1-VL-235B-A22B", "score": 73.3 },
+        { "name": "P1-VL-30B-A3B", "score": 79.1 }
       ]
     },
     {
@@ -594,7 +627,10 @@
         { "name": "Gemini-3-Pro", "score": 74.8 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 78.0 },
         { "name": "Kimi-K2-Thinking", "score": 64.8 },
-        { "name": "GPT-5.2 (high)", "score": 82.3 }
+        { "name": "GPT-5.2 (high)", "score": 82.3 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 84.8 },
+        { "name": "P1-VL-235B-A22B", "score": 82.0 },
+        { "name": "P1-VL-30B-A3B", "score": 75.5 }
       ]
     },
     {
@@ -644,7 +680,10 @@
         { "name": "Gemini-3-Pro", "score": 23.8 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 20.3 },
         { "name": "Kimi-K2-Thinking", "score": 20.6 },
-        { "name": "GPT-5.2 (high)", "score": 23.4 }
+        { "name": "GPT-5.2 (high)", "score": 23.4 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 23.1 },
+        { "name": "P1-VL-235B-A22B", "score": 22.5 },
+        { "name": "P1-VL-30B-A3B", "score": 20.8 }
       ]
     },
     {
@@ -694,7 +733,10 @@
         { "name": "Gemini-3-Pro", "score": 23.9 },
         { "name": "DeepSeek-V3.2-Speciale", "score": 19.6 },
         { "name": "Kimi-K2-Thinking", "score": 19.7 },
-        { "name": "GPT-5.2 (high)", "score": 23.5 }
+        { "name": "GPT-5.2 (high)", "score": 23.5 },
+        { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 21.8 },
+        { "name": "P1-VL-235B-A22B", "score": 21.9 },
+        { "name": "P1-VL-30B-A3B", "score": 20.3 }
       ]
     }
   ]
