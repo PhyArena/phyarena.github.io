@@ -28,6 +28,8 @@
     "Qwen2.5-VL-7B-Instruct": "open-source MLLM",
     "Phi-4-multimodal": "open-source MLLM",
     "DeepSeek-VL2": "open-source MLLM",
+    "Qwen3-VL-235B-A22B-Thinking": "open-source MLLM",
+    "Qwen3-VL-30B-A3B-Thinking": "open-source MLLM",
 
     "GPT-OSS-120B": "open-source LLM",
     "DeepSeek-R1": "open-source LLM",
@@ -100,7 +102,9 @@
         { "name": "GPT-5.2 (high)", "score": 22.3 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 22.1 },
         { "name": "P1-VL-235B-A22B", "score": 21.0 },
-        { "name": "P1-VL-30B-A3B", "score": 17.9 }
+        { "name": "P1-VL-30B-A3B", "score": 17.9 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 19.8 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 15.7 }
       ]
     },
     {
@@ -153,7 +157,9 @@
         { "name": "GPT-5.2 (high)", "score": 25.5 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 25.8 },
         { "name": "P1-VL-235B-A22B", "score": 25.3 },
-        { "name": "P1-VL-30B-A3B", "score": 22.5 }
+        { "name": "P1-VL-30B-A3B", "score": 22.5 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 23.4 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 19.3 }
       ]
     },
     {
@@ -206,7 +212,9 @@
         { "name": "GPT-5.2 (high)", "score": 28.4 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 27.1 },
         { "name": "P1-VL-235B-A22B", "score": 26.9 },
-        { "name": "P1-VL-30B-A3B", "score": 24.6 }
+        { "name": "P1-VL-30B-A3B", "score": 24.6 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 25.4 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 25.3 }
       ]
     },
     {
@@ -259,7 +267,9 @@
         { "name": "GPT-5.2 (high)", "score": 15.7 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 13.7 },
         { "name": "P1-VL-235B-A22B", "score": 10.7 },
-        { "name": "P1-VL-30B-A3B", "score": 10.6 }
+        { "name": "P1-VL-30B-A3B", "score": 10.6 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 10.8 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 11.7 }
       ]
     },
     {
@@ -312,7 +322,9 @@
         { "name": "GPT-5.2 (high)", "score": 23.9 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 22.9 },
         { "name": "P1-VL-235B-A22B", "score": 21.5 },
-        { "name": "P1-VL-30B-A3B", "score": 19.0 }
+        { "name": "P1-VL-30B-A3B", "score": 19.0 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 19.0 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 20.2 }
       ]
     },
     {
@@ -365,7 +377,9 @@
         { "name": "GPT-5.2 (high)", "score": 35.8 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 31.8 },
         { "name": "P1-VL-235B-A22B", "score": 32.5 },
-        { "name": "P1-VL-30B-A3B", "score": 30.2 }
+        { "name": "P1-VL-30B-A3B", "score": 30.2 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 29.2 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 29.7 }
       ]
     },
     {
@@ -418,7 +432,9 @@
         { "name": "GPT-5.2 (high)", "score": 37.1 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 32.6 },
         { "name": "P1-VL-235B-A22B", "score": 31.9 },
-        { "name": "P1-VL-30B-A3B", "score": 24.6 }
+        { "name": "P1-VL-30B-A3B", "score": 24.6 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 25.9 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 28.3 }
       ]
     },
     {
@@ -471,7 +487,9 @@
         { "name": "GPT-5.2 (high)", "score": 59.8 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 66.5 },
         { "name": "P1-VL-235B-A22B", "score": 61.7 },
-        { "name": "P1-VL-30B-A3B", "score": 50.8 }
+        { "name": "P1-VL-30B-A3B", "score": 50.8 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 48.3 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 41.6 }
       ]
     },
     {
@@ -524,7 +542,9 @@
         { "name": "GPT-5.2 (high)", "score": 82.5 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 83.3 },
         { "name": "P1-VL-235B-A22B", "score": 79.8 },
-        { "name": "P1-VL-30B-A3B", "score": 58.6 }
+        { "name": "P1-VL-30B-A3B", "score": 58.6 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 54.0 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 45.9 }
       ]
     },
     {
@@ -577,7 +597,9 @@
         { "name": "GPT-5.2 (high)", "score": 67.6 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 76.0 },
         { "name": "P1-VL-235B-A22B", "score": 73.3 },
-        { "name": "P1-VL-30B-A3B", "score": 79.1 }
+        { "name": "P1-VL-30B-A3B", "score": 79.1 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 64.3 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 57.6 }
       ]
     },
     {
@@ -630,7 +652,9 @@
         { "name": "GPT-5.2 (high)", "score": 82.3 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 84.8 },
         { "name": "P1-VL-235B-A22B", "score": 82.0 },
-        { "name": "P1-VL-30B-A3B", "score": 75.5 }
+        { "name": "P1-VL-30B-A3B", "score": 75.5 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 79.9 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 51.4 }
       ]
     },
     {
@@ -683,7 +707,9 @@
         { "name": "GPT-5.2 (high)", "score": 23.4 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 23.1 },
         { "name": "P1-VL-235B-A22B", "score": 22.5 },
-        { "name": "P1-VL-30B-A3B", "score": 20.8 }
+        { "name": "P1-VL-30B-A3B", "score": 20.8 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 21.4 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 18.9 }
       ]
     },
     {
@@ -736,7 +762,9 @@
         { "name": "GPT-5.2 (high)", "score": 23.5 },
         { "name": "P1-VL-235B-A22B + PhysicsMinions", "score": 21.8 },
         { "name": "P1-VL-235B-A22B", "score": 21.9 },
-        { "name": "P1-VL-30B-A3B", "score": 20.3 }
+        { "name": "P1-VL-30B-A3B", "score": 20.3 },
+        { "name": "Qwen3-VL-235B-A22B-Thinking", "score": 19.9 },
+        { "name": "Qwen3-VL-30B-A3B-Thinking", "score": 20.7 }
       ]
     }
   ]
